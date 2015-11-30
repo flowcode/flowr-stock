@@ -1,0 +1,34 @@
+{
+    "name" : "flower/stockbundle",
+    "description" : "stock bundle",
+    "type" : "symfony-bundle",
+    "authors" : [{
+        "name" : "Francisco Memoli",
+        "email" : "fmemoli@flowcode.com.ar"
+    },
+    {
+        "name" : "Juan Manuel Agüero",
+        "email" : "jaguero@flowcode.com.ar"
+    }],
+    "keywords" : [
+        "stock bundle"
+    ],
+    "license" : [
+        "MIT"
+    ],
+    "require" : {
+    },
+    "autoload" : {
+        "psr-0" : {
+            "Flower\\StockBundle" : ""
+        }
+    },
+    "target-dir" : "Flower/StockBundle",
+    "repositories" : [{
+    }],
+    "extra" : {
+    "branch-alias" : {
+            "dev-master" : "1.0.0-dev"
+        }
+    }
+}
