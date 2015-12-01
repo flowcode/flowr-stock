@@ -1,0 +1,19 @@
+'%entity% List': 'Lista de Servicios'
+'%entity% creation': 'Creación de Servicio'
+'%entity% edit': 'Editar Servicio'
+'%entity% list': 'Servicios'
+'Confirm delete': 'Confirmar borrado'
+Create: Crear
+'Create a new %entity%': 'Crear un nuevo Servicio'
+Delete: Borrar
+'Do you want to proceed?': '¿Desea continuar de todos modos?'
+Edit: Editar
+Name: Nombre
+'No': 'No'
+Price: Precio
+Save: Guardar
+Service: Servicio
+'Service list': 'Lista de servicios'
+'Yes': Si
+'You are about to delete an item': 'Usted esta por borrar un elemento'
+'this procedure is irreversible': 'esta accion será irreversible'

@@ -1,0 +1,24 @@
+{% extends "FlowerCoreBundle::layout.html.twig" %}
+
+{% block title %}{{ '%entity% creation'|trans({'%entity%': 'ProductCategory'}, 'ProductCategory') }} - {{ parent() }}{% endblock %}
+
+{% block body %}    
+    <section class="content">
+        {{ include("FlowerStockBundle::appnav.html.twig", { 'app_productcategory': true }) }} 
+        <div class="box">
+            <div class="box-body">
+                {{ form_start(form, {action: path('productcategory_create')}) }}
+                    {{ form_widget(form) }}
+                    <p>
+                        <button class="btn-default btn" type="submit">{{ 'Create'|trans({}, 'ProductCategory') }}</button>
+                    </p>
+                {{ form_end(form) }}
+            </div>
+            <div class="box-footer">
+                        
+        <div class="btn-group record_actions"></div>
+
+            </div>
+        </div>
+    </section>
+{% endblock %}

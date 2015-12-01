@@ -1,0 +1,21 @@
+		<div class="nav-app">
+            <ul class="nav nav-tabs ">
+                <li role="presentation" class="app-icon bg-purple">
+                    <i class="fa fa-gift"></i>
+                </li>
+                <li role="presentation" 
+                {% if app_product is defined %}class="active"{% endif %}
+                >
+                    <a href="{{ path('product') }}">{{ '%entity% list'|trans({'%entity%': 'Product'}, 'Product') }}</a>
+                </li>
+                <li role="presentation" {% if app_productcategory is defined %}class="active"{% endif %}
+                >
+                    <a href="{{ path('productcategory') }}">{{ '%entity% list'|trans({'%entity%': 'ProductCategory'}, 'ProductCategory') }}</a>
+                </li>
+                <li role="presentation"  {% if app_service is defined %}class="active"{% endif %}
+                >
+                    <a href="{{ path('service') }}">{{ '%entity% list'|trans({'%entity%': 'Service'}, 'Service') }}</a>
+                </li>
+            </ul>
+        </div>
+

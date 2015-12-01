@@ -1,0 +1,19 @@
+'%entity% List': 'Lista de categorías de productos'
+'%entity% creation': 'Crear Categoría de productos'
+'%entity% edit': 'editar categoría de productos'
+'%entity% list': 'Categorías de Productos'
+'Confirm delete': 'Confirmar Borrado'
+Create: Crear
+'Create a new %entity%': 'Crear nueva categoría'
+Delete: Borrar
+'Do you want to proceed?': '¿Desea continuar de todos modos?'
+Edit: Editar
+Name: Nombre
+'No': 'No'
+ProductCategory: Categoría de producto
+'ProductCategory list': 'lista de categorías de productos'
+Save: Guardar
+'Yes': Si
+'You are about to delete an item': 'Usted esta por borrar un elemento'
+'this procedure is irreversible': 'esta accion será irreversible'
+'Product categories': Categorías de productos

@@ -1,0 +1,20 @@
+'%entity% List': 'Lista de productos'
+'%entity% creation': 'Creación de Producto'
+'%entity% edit': 'Editar Producto'
+'%entity% list': 'Productos'
+'Confirm delete': 'Confirmar borrado'
+Create: Crear
+'Create a new %entity%': 'Crear nuevo Producto'
+Delete: Borrar
+'Do you want to proceed?': '¿Desea continuar de todos modos?'
+Edit: Editar
+Enabled: Habiltiar
+Name: Nombre
+'No': 'No'
+Price: Precio
+Product: Producto
+'Product list': 'Lista de Productos'
+Save: Guardar
+'Yes': Si
+'You are about to delete an item': 'Usted esta por borrar un elemento'
+'this procedure is irreversible': 'esta accion será irreversible'
