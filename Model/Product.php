@@ -40,7 +40,11 @@ abstract class Product
      */
     protected $enabled;
 
-
+    /**
+     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\ProductCategory")
+     * @ORM\JoinColumn(name="category", referencedColumnName="id")
+     */
+     protected $category;
     /**
      * Get id
      *
@@ -118,5 +122,32 @@ abstract class Product
     public function getEnabled()
     {
         return $this->enabled;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \Flower\ModelBundle\Entity\Stock\ProductCategory $category
+     * @return Product
+     */
+    public function setCategory(\Flower\ModelBundle\Entity\Stock\ProductCategory $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \Flower\ModelBundle\Entity\Stock\ProductCategory 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+    public function __toString()
+    {
+        return $this->name;
     }
 }

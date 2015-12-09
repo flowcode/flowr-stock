@@ -4,7 +4,7 @@
 
 {% block body %}
     <section class="content">    
-        {{ include("FlowerStockBundle::appnav.html.twig", { 'app_service': true }) }} 
+        {{ include("FlowerStockBundle::appnav.html.twig", { }) }} 
         <div class="box"  id='showService'>
             <div class="box-header">
                 <div class="box-tools  pull-right">
@@ -25,11 +25,15 @@
             </div>
             <div class="box-body">
                 <table class="table table-hover record_properties">
-                    <tbody>                        </tr>                        <tr>
+                    <tbody>
+                        <tr>
                             <th scope="row">{{'Name'|trans({}, 'Service')}}</th>
-                            <td>{{ service.name }}</td>                        </tr>                        <tr>
+                            <td>{{ service.name }}</td>
+                        </tr>
+                        <tr>
                             <th scope="row">{{'Price'|trans({}, 'Service')}}</th>
-                            <td>{{ service.price }}</td>                        </tr>
+                            <td>{{ service.price }}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -57,7 +61,7 @@
             {{ form_start(edit_form) }}
                 {{ form_widget(edit_form) }}
                 <p>
-                    <button class="btn-default btn" type="submit"><i class="fa fa-edit"></i> {{ 'Save'|trans({}, 'Service') }}</button>
+                    <button class="btn-default btn" type="submit"> {{ 'Save'|trans({}, 'Service') }}</button>
                 </p>
             {{ form_end(edit_form) }}
             </div>

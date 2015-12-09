@@ -4,7 +4,7 @@
 
 {% block body %}
     <section class="content">    
-        {{ include("FlowerStockBundle::appnav.html.twig", { 'app_productcategory': true }) }} 
+        {{ include("FlowerStockBundle::appnav.html.twig", { }) }} 
         <div class="box"  id='showProductCategory'>
             <div class="box-header">
                 <div class="box-tools  pull-right">
@@ -25,9 +25,11 @@
             </div>
             <div class="box-body">
                 <table class="table table-hover record_properties">
-                    <tbody>                        </tr>                        <tr>
+                    <tbody>
+                        <tr>
                             <th scope="row">{{'Name'|trans({}, 'ProductCategory')}}</th>
-                            <td>{{ productcategory.name }}</td>                        </tr>
+                            <td>{{ productcategory.name }}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -55,7 +57,7 @@
             {{ form_start(edit_form) }}
                 {{ form_widget(edit_form) }}
                 <p>
-                    <button class="btn-default btn" type="submit"><i class="fa fa-edit"></i> {{ 'Save'|trans({}, 'ProductCategory') }}</button>
+                    <button class="btn-default btn" type="submit"> {{ 'Save'|trans({}, 'ProductCategory') }}</button>
                 </p>
             {{ form_end(edit_form) }}
             </div>

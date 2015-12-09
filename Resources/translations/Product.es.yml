@@ -8,7 +8,7 @@ Create: Crear
 Delete: Borrar
 'Do you want to proceed?': '¿Desea continuar de todos modos?'
 Edit: Editar
-Enabled: Habiltiar
+Enabled: Habilitado
 Name: Nombre
 'No': 'No'
 Price: Precio
@@ -18,3 +18,4 @@ Save: Guardar
 'Yes': Si
 'You are about to delete an item': 'Usted esta por borrar un elemento'
 'this procedure is irreversible': 'esta accion será irreversible'
+Category: Categoría

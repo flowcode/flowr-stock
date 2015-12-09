@@ -26,6 +26,10 @@ abstract class ProductCategory
      */
     protected $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="\Flower\ModelBundle\Entity\Stock\Product", mappedBy="category")
+     */
+    protected $products;
 
     /**
      * Get id
@@ -56,6 +60,51 @@ abstract class ProductCategory
      * @return string 
      */
     public function getName()
+    {
+        return $this->name;
+    }
+        /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add products
+     *
+     * @param \Flower\ModelBundle\Entity\Stock\Product $products
+     * @return ProductCategory
+     */
+    public function addProduct(\Flower\ModelBundle\Entity\Stock\Product $products)
+    {
+        $this->products[] = $products;
+
+        return $this;
+    }
+
+    /**
+     * Remove products
+     *
+     * @param \Flower\ModelBundle\Entity\Stock\Product $products
+     */
+    public function removeProduct(\Flower\ModelBundle\Entity\Stock\Product $products)
+    {
+        $this->products->removeElement($products);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    public function __toString()
     {
         return $this->name;
     }
