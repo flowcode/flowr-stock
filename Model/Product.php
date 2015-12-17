@@ -3,7 +3,7 @@
 namespace Flower\StockBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use JMS\Serializer\Annotation\Groups;
 /**
  * Product
  *
@@ -16,6 +16,7 @@ abstract class Product
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"public_api"})
      */
     protected $id;
 
@@ -23,6 +24,7 @@ abstract class Product
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Groups({"public_api"})
      */
     protected $name;
 
@@ -30,6 +32,7 @@ abstract class Product
      * @var string
      *
      * @ORM\Column(name="price", type="decimal")
+     * @Groups({"public_api"})
      */
     protected $price;
 
@@ -43,6 +46,7 @@ abstract class Product
     /**
      * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\ProductCategory")
      * @ORM\JoinColumn(name="category", referencedColumnName="id")
+     * @Groups({"public_api"})
      */
      protected $category;
     /**

@@ -20,6 +20,7 @@ class ProductType extends AbstractType
             ->add('price')
             ->add('enabled', 'checkbox', array(
                 'attr'     => array('checked'   => 'checked'),
+                "required" => false
             ));
     }
 
