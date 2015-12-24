@@ -29,9 +29,9 @@ abstract class Product
     protected $name;
 
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="price", type="decimal")
+     * @ORM\Column(name="price", type="float")
      * @Groups({"public_api"})
      */
     protected $price;
@@ -85,7 +85,7 @@ abstract class Product
     /**
      * Set price
      *
-     * @param string $price
+     * @param float $price
      * @return Product
      */
     public function setPrice($price)
@@ -98,7 +98,7 @@ abstract class Product
     /**
      * Get price
      *
-     * @return string 
+     * @return float 
      */
     public function getPrice()
     {
