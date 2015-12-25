@@ -34,6 +34,11 @@
                             <th scope="row">{{'Price'|trans({}, 'Service')}}</th>
                             <td>{{ service.price }}</td>
                         </tr>
+                        
+                        <tr>
+                            <th scope="row">{{'Enabled'|trans({}, 'Service')}}</th>
+                            <td>{% if service.enabled %}<i class="fa fa-check-square-o"></i>{% else %}<i class="fa fa-square-o"></i>{% endif %}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

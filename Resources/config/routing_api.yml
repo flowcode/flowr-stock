@@ -2,3 +2,8 @@ flower_api_stock_products_findall:
     path:     /products
     defaults: { _controller: FlowerStockBundle:Api\Product:getAll }
     methods: [GET]
+
+flower_api_stock_services_findall:
+    path:     /services
+    defaults: { _controller: FlowerStockBundle:Api\Service:getAll }
+    methods: [GET]

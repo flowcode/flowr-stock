@@ -3,7 +3,7 @@
 namespace Flower\StockBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use JMS\Serializer\Annotation\Groups;
 /**
  * Service
  *
@@ -16,6 +16,7 @@ abstract class Service
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"public_api"})
      */
     protected $id;
 
@@ -23,16 +24,25 @@ abstract class Service
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Groups({"public_api"})
      */
     protected $name;
 
+
     /**
-     * @var string
+     * @var float
      *
-     * @ORM\Column(name="price", type="decimal")
+     * @ORM\Column(name="price", type="float")
+     * @Groups({"public_api"})
      */
     protected $price;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
+    protected $enabled;
 
     /**
      * Get id
@@ -68,9 +78,31 @@ abstract class Service
     }
 
     /**
+     * Set enabled
+     *
+     * @param boolean $enabled
+     * @return Product
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
+    /**
+     * Get enabled
+     *
+     * @return boolean 
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+    /**
      * Set price
      *
-     * @param string $price
+     * @param float $price
      * @return Service
      */
     public function setPrice($price)
@@ -83,7 +115,7 @@ abstract class Service
     /**
      * Get price
      *
-     * @return string 
+     * @return float 
      */
     public function getPrice()
     {

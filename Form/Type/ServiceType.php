@@ -17,6 +17,10 @@ class ServiceType extends AbstractType
         
             ->add('name')
             ->add('price')
+            ->add('enabled', 'checkbox', array(
+                'attr'     => array('checked'   => 'checked'),
+                "required" => false
+            ));
         ;
     }
 
