@@ -1,21 +1,25 @@
-		<div class="nav-app">
-            <ul class="nav nav-tabs ">
-                <li role="presentation" class="app-icon">
-                    <img src="{{ asset('bundles/flowercore/images/icons/Packaging-100.png') }}" class="img-responsive">
-                </li>
-                <li role="presentation" 
-                {% if app_product is defined %}class="active"{% endif %}
-                >
-                    <a href="{{ path('product') }}">{{ '%entity% list'|trans({'%entity%': 'Product'}, 'Product') }}</a>
-                </li>
-                <li role="presentation" {% if app_productcategory is defined %}class="active"{% endif %}
-                >
-                    <a href="{{ path('productcategory') }}">{{ '%entity% list'|trans({'%entity%': 'ProductCategory'}, 'ProductCategory') }}</a>
-                </li>
-                <li role="presentation"  {% if app_service is defined %}class="active"{% endif %}
-                >
-                    <a href="{{ path('service') }}">{{ '%entity% list'|trans({'%entity%': 'Service'}, 'Service') }}</a>
-                </li>
-            </ul>
+<section class="sidebar">
+    <div class="app-header">
+        <div class="row">
+            <div class="col-sm-12">
+                <img src="{{ asset('bundles/flowercore/images/icons/Packaging-100.png') }}"
+                     class="img-responsive pull-left" width="40">
+                <span>
+                    {{ '%entity% list'|trans({'%entity%': 'Product'}, 'Product') }}
+                </span>
+            </div>
         </div>
+    </div>
+    <ul class="sidebar-menu">
 
+        <li {% if app_product is defined %}class="active"{% endif %}>
+            <a href="{{ path('product') }}">{{ '%entity% list'|trans({'%entity%': 'Product'}, 'Product') }}</a>
+        </li>
+        <li {% if app_productcategory is defined %}class="active"{% endif %}>
+            <a href="{{ path('productcategory') }}">{{ '%entity% list'|trans({'%entity%': 'ProductCategory'}, 'ProductCategory') }}</a>
+        </li>
+        <li {% if app_service is defined %}class="active"{% endif %}>
+            <a href="{{ path('service') }}">{{ '%entity% list'|trans({'%entity%': 'Service'}, 'Service') }}</a>
+        </li>
+    </ul>
+</section>

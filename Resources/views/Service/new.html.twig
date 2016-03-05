@@ -2,9 +2,17 @@
 
 {% block title %}{{ '%entity% creation'|trans({'%entity%': 'Service'}, 'Service') }} - {{ parent() }}{% endblock %}
 
+{% block app_menu %}
+    {{ include("FlowerStockBundle::appnav.html.twig", { 'app_service': true }) }}
+{% endblock %}
+
 {% block body %}
+    <section class="content-header">
+        <h1>
+            {{ 'Create a new %entity%'|trans({'%entity%': 'Service'}, 'Service') }}
+        </h1>
+    </section>
     <section class="content">
-        {{ include("FlowerStockBundle::appnav.html.twig", { }) }} 
         <div class="box">
             <div class="box-body">
                 {{ form_start(form, {action: path('service_create')}) }}

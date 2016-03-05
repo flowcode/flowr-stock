@@ -6,50 +6,65 @@
         {% set sort = app.session.get('sort.' ~ name) %}
         {% if sort and sort.field == field %}
             {% if sort.type == 'DESC' %}
-                <a href="{{ path('productcategory_sort', {field: field, type: 'ASC'}) }}">{{ label | trans({},'ProductCategory')}} <i class="fa fa-sort-down"></i></a>
+                <a href="{{ path('productcategory_sort', {field: field, type: 'ASC'}) }}">{{ label | trans({},'ProductCategory') }}
+                    <i class="fa fa-sort-down"></i></a>
             {% elseif sort.type == 'ASC' %}
-                <a href="{{ path('productcategory_sort', {field: field, type: 'DESC'}) }}">{{ label | trans({},'ProductCategory')}} <i class="fa fa-sort-up"></i></a>
+                <a href="{{ path('productcategory_sort', {field: field, type: 'DESC'}) }}">{{ label | trans({},'ProductCategory') }}
+                    <i class="fa fa-sort-up"></i></a>
             {% endif %}
         {% else %}
-            <a href="{{ path('productcategory_sort', {field: field, type: 'ASC'}) }}">{{ label | trans({},'ProductCategory')}} <i class="fa fa-sort"></i></a>
+            <a href="{{ path('productcategory_sort', {field: field, type: 'ASC'}) }}">{{ label | trans({},'ProductCategory') }}
+                <i class="fa fa-sort"></i></a>
         {% endif %}
     {% endspaceless %}
 {% endmacro %}
 
 {% from _self import thead %}
 
+{% block app_menu %}
+    {{ include("FlowerStockBundle::appnav.html.twig", { 'app_productcategory': true }) }}
+{% endblock %}
 
 {% block body %}
-    <section class="content">    
-        {{ include("FlowerStockBundle::appnav.html.twig", { 'app_productcategory': true }) }} 
+    <section class="content-header">
+        <h1>
+            {{ '%entity% list'|trans({'%entity%': 'ProductCategory'}, 'ProductCategory') }}
+        </h1>
+    </section>
+    <section class="content">
         <div class="box">
             <div class="box-header">
-                <div class="box-tools pull-right">                    <a class="btn btn-link btn-sm" href={{ path('productcategory_new') }}>
+                <div class="box-tools pull-right">
+                    <a class="btn btn-link btn-sm" href={{ path('productcategory_new') }}>
                         <i class="fa fa-plus"></i> {{ 'Create a new %entity%'|trans({'%entity%': 'ProductCategory'}, 'ProductCategory') }}
                     </a>
-                            </div>
+                </div>
             </div>
-            <div class="box-body">    
-            <table class="table table-hover records_list table-condensed">
-                <thead>
-                    <tr>                        <th scope="col">{{ thead('productcategory', 'name', 'Name') }}</th>                    </tr>
-                </thead>
-                <tbody>
+            <div class="box-body">
+                <table class="table table-hover records_list table-condensed">
+                    <thead>
+                    <tr>
+                        <th scope="col">{{ thead('productcategory', 'name', 'Name') }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
                     {% for productcategory in paginator %}
                         <tr>
-                                                             
-                                <td><a href="{{ path('productcategory_show', {id: productcategory.id}) }}">{{ productcategory.name }}</a></td>
+
+                            <td>
+                                <a href="{{ path('productcategory_show', {id: productcategory.id}) }}">{{ productcategory.name }}</a>
+                            </td>
                         </tr>
                     {% endfor %}
-                </tbody>
-            </table>
-            
-            {{ knp_pagination_render(paginator) }}
-            </div>
-        <div class="box-footer">
+                    </tbody>
+                </table>
 
-        </div>
-        
-    </section>        
+                {{ knp_pagination_render(paginator) }}
+            </div>
+            <div class="box-footer">
+
+            </div>
+
+    </section>
 
 {% endblock %}
