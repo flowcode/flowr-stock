@@ -2,6 +2,7 @@
 
 namespace Flower\StockBundle\Controller;
 
+use Flower\ModelBundle\Entity\Stock\ProductRawMaterial;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -31,10 +32,47 @@ class ProductController extends Controller
         $qb = $em->getRepository('FlowerModelBundle:Stock\Product')->createQueryBuilder('p');
         $this->addQueryBuilderSort($qb, 'product');
         $paginator = $this->get('knp_paginator')->paginate($qb, $request->query->get('page', 1), 20);
-        
+
         return array(
             'paginator' => $paginator,
         );
+    }
+
+    /**
+     * Finds and displays a Product entity.
+     *
+     * @Route("/{id}/stock_increase", name="product_stock_increase", requirements={"id"="\d+"})
+     * @Method("GET")
+     * @Template()
+     */
+    public function stockIncreaseAction(Product $product)
+    {
+
+        return array(
+            'product' => $product,
+        );
+    }
+
+    /**
+     * Finds and displays a Product entity.
+     *
+     * @Route("/{id}/stock_increase", name="product_stock_do_increase", requirements={"id"="\d+"})
+     * @Method("POST")
+     * @Template()
+     */
+    public function stockIncreaseDoAction(Request $request, Product $product)
+    {
+
+        if ($request->get('quantity')) {
+
+            $stockService = $this->get('flower.stock.service.stock');
+
+            $stockService->increaseProduct($product, $request->get('quantity'));
+
+            return $this->redirect($this->generateUrl('product_show', array('id' => $product->getId())));
+        }
+
+        return $this->redirect($this->generateUrl('product_stock_increase', array('id' => $product->getId())));
     }
 
     /**
@@ -54,8 +92,8 @@ class ProductController extends Controller
 
         return array(
 
-        'product' => $product,
-        'edit_form'   => $editForm->createView(),
+            'product' => $product,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
 
         );
@@ -71,11 +109,12 @@ class ProductController extends Controller
     public function newAction()
     {
         $product = new Product();
+
         $form = $this->createForm(new ProductType(), $product);
 
         return array(
             'product' => $product,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -92,6 +131,11 @@ class ProductController extends Controller
         $form = $this->createForm(new ProductType(), $product);
         if ($form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            foreach ($product->getRawMaterials() as $productRawMaterial) {
+                $productRawMaterial->setProduct($product);
+            }
+
             $em->persist($product);
             $em->flush();
 
@@ -100,7 +144,7 @@ class ProductController extends Controller
 
         return array(
             'product' => $product,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -121,7 +165,7 @@ class ProductController extends Controller
 
         return array(
             'product' => $product,
-            'edit_form'   => $editForm->createView(),
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -148,7 +192,7 @@ class ProductController extends Controller
 
         return array(
             'product' => $product,
-            'edit_form'   => $editForm->createView(),
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -167,9 +211,9 @@ class ProductController extends Controller
     }
 
     /**
-     * @param string $name  session name
+     * @param string $name session name
      * @param string $field field name
-     * @param string $type  sort type ("ASC"/"DESC")
+     * @param string $type sort type ("ASC"/"DESC")
      */
     protected function setOrder($name, $field, $type = 'ASC')
     {
@@ -189,7 +233,7 @@ class ProductController extends Controller
 
     /**
      * @param QueryBuilder $qb
-     * @param string       $name
+     * @param string $name
      */
     protected function addQueryBuilderSort(QueryBuilder $qb, $name)
     {
@@ -220,8 +264,8 @@ class ProductController extends Controller
     /**
      * Create Delete form
      *
-     * @param integer                       $id
-     * @param string                        $route
+     * @param integer $id
+     * @param string $route
      * @return \Symfony\Component\Form\Form
      */
     protected function createDeleteForm($id, $route)
@@ -229,8 +273,7 @@ class ProductController extends Controller
         return $this->createFormBuilder(null, array('attr' => array('id' => 'delete')))
             ->setAction($this->generateUrl($route, array('id' => $id)))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 
 }

@@ -5,6 +5,7 @@ namespace Flower\StockBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Flower\StockBundle\Form\Type\ProductRawMaterialType;
 
 class ProductType extends AbstractType
 {
@@ -14,13 +15,18 @@ class ProductType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        
             ->add('name')
-            ->add('category',null,array("required" => true))
+            ->add('category', null, array("required" => true))
             ->add('price')
             ->add('enabled', 'checkbox', array(
-                'attr'     => array('checked'   => 'checked'),
+                'attr' => array('checked' => 'checked'),
                 "required" => false
+            ))
+            ->add('rawMaterials', 'collection', array(
+                'type' => new ProductRawMaterialType(),
+                'allow_add' => true,
+                'by_reference' => false,
+                'allow_delete' => true,
             ));
     }
 

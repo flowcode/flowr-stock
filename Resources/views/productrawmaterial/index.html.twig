@@ -1,0 +1,67 @@
+{% extends "FlowerCoreBundle::layout.html.twig" %}
+
+{% block title %}{{ '%entity% list'|trans({'%entity%': 'productrawmaterial'}, 'productrawmaterial') }} - {{ parent() }}{% endblock %}
+{% macro thead(name, field, label) %}
+    {% spaceless %}
+        {% set sort = app.session.get('sort.' ~ name) %}
+        {% if sort and sort.field == field %}
+            {% if sort.type == 'DESC' %}
+                <a href="{{ path('stock_productrawmaterial_sort', {field: field, type: 'ASC'}) }}">{{ label | trans({},'productrawmaterial') }}
+                    <i class="fa fa-sort-down"></i></a>
+            {% elseif sort.type == 'ASC' %}
+                <a href="{{ path('stock_productrawmaterial_sort', {field: field, type: 'DESC'}) }}">{{ label | trans({},'productrawmaterial') }}
+                    <i class="fa fa-sort-up"></i></a>
+            {% endif %}
+        {% else %}
+            <a href="{{ path('stock_productrawmaterial_sort', {field: field, type: 'ASC'}) }}">{{ label | trans({},'productrawmaterial') }}
+                <i class="fa fa-sort"></i></a>
+        {% endif %}
+    {% endspaceless %}
+{% endmacro %}
+
+{% from _self import thead %}
+
+
+{% block body %}
+    <section class="content-header">
+        <h1>
+            {{ '%entity% list'|trans({'%entity%': 'productrawmaterial'}, 'productrawmaterial') }}
+        </h1>
+    </section>
+    <section class="content">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-tools pull-right"><a class="btn btn-link btn-sm"
+                                                     href={{ path('stock_productrawmaterial_new') }}>
+                        <i class="fa fa-plus"></i> {{ 'Create a new %entity%'|trans({'%entity%': 'productrawmaterial'}, 'productrawmaterial') }}
+                    </a>
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table table-hover records_list table-condensed">
+                    <thead>
+                    <tr>
+                        <th scope="col">{{ thead('productrawmaterial', 'quantity', 'Quantity') }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for productrawmaterial in paginator %}
+                        <tr>
+
+                            <td>
+                                <a href="{{ path('stock_productrawmaterial_show', {id: productrawmaterial.id}) }}">{{ productrawmaterial.quantity }}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                {{ knp_pagination_render(paginator) }}
+            </div>
+            <div class="box-footer">
+
+            </div>
+
+    </section>
+
+{% endblock %}

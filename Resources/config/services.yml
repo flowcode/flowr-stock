@@ -1,0 +1,6 @@
+services:
+
+    flower.stock.service.stock:
+        class: Flower\StockBundle\Service\StockService
+        calls:
+          - [ setContainer,[ @service_container ]]

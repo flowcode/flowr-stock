@@ -11,15 +11,26 @@
         </div>
     </div>
     <ul class="sidebar-menu">
+        <li {% if app_service is defined %}class="active"{% endif %}>
+            <a href="{{ path('service') }}">{{ '%entity% list'|trans({'%entity%': 'Service'}, 'Service') }}</a>
+        </li>
 
         <li {% if app_product is defined %}class="active"{% endif %}>
             <a href="{{ path('product') }}">{{ '%entity% list'|trans({'%entity%': 'Product'}, 'Product') }}</a>
         </li>
+
         <li {% if app_productcategory is defined %}class="active"{% endif %}>
             <a href="{{ path('productcategory') }}">{{ '%entity% list'|trans({'%entity%': 'ProductCategory'}, 'ProductCategory') }}</a>
         </li>
-        <li {% if app_service is defined %}class="active"{% endif %}>
-            <a href="{{ path('service') }}">{{ '%entity% list'|trans({'%entity%': 'Service'}, 'Service') }}</a>
+        <li {% if app_rawmaterial is defined %}class="active"{% endif %}>
+            <a href="{{ path('stock_rawmaterial') }}">
+                {{ 'rawmaterial'|trans({'%entity%': 'RawMaterial'}, 'Product') }}
+            </a>
+        </li>
+        <li {% if app_rawmaterialcategory is defined %}class="active"{% endif %}>
+            <a href="{{ path('stock_rawmaterialcategory') }}">
+                {{ 'rawmaterial_category'|trans({'%entity%': 'RawMaterialCategory'}, 'Product') }}
+            </a>
         </li>
     </ul>
 </section>

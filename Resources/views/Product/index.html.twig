@@ -47,6 +47,7 @@
                     <tr>
                         <th scope="col">{{ thead('product', 'name', 'Name') }}</th>
                         <th scope="col">{{ thead('product', 'price', 'Price') }}</th>
+                        <th scope="col">{{ thead('product', 'stock', 'Stock') }}</th>
                         <th scope="col">{{ thead('product', 'enabled', 'Enabled') }}</th>
                     </tr>
                     </thead>
@@ -55,8 +56,14 @@
                         <tr>
                             <td><a href="{{ path('product_show', {id: product.id}) }}">{{ product.name }}</a></td>
                             <td>{{ product.price }}</td>
-                            <td>{% if product.enabled %}<i class="fa fa-check-square-o"></i>{% else %}<i
-                                        class="fa fa-square-o"></i>{% endif %}</td>
+                            <td>{{ product.stock }}</td>
+                            <td>
+                                {% if product.enabled %}
+                                    <i class="fa fa-check-square-o"></i>
+                                {% else %}
+                                    <i class="fa fa-square-o"></i>
+                                {% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

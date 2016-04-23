@@ -1,0 +1,76 @@
+{% extends "FlowerCoreBundle::layout.html.twig" %}
+
+{% block title %}{{ '%entity% list'|trans({'%entity%': 'Stock\RawMaterial'}, 'Stock\RawMaterial') }} - {{ parent() }}{% endblock %}
+{% macro thead(name, field, label) %}
+    {% spaceless %}
+        {% set sort = app.session.get('sort.' ~ name) %}
+        {% if sort and sort.field == field %}
+            {% if sort.type == 'DESC' %}
+                <a href="{{ path('stock_rawmaterial_sort', {field: field, type: 'ASC'}) }}">{{ label | trans({},'Stock\RawMaterial') }}
+                    <i class="fa fa-sort-down"></i></a>
+            {% elseif sort.type == 'ASC' %}
+                <a href="{{ path('stock_rawmaterial_sort', {field: field, type: 'DESC'}) }}">{{ label | trans({},'Stock\RawMaterial') }}
+                    <i class="fa fa-sort-up"></i></a>
+            {% endif %}
+        {% else %}
+            <a href="{{ path('stock_rawmaterial_sort', {field: field, type: 'ASC'}) }}">{{ label | trans({},'Stock\RawMaterial') }}
+                <i class="fa fa-sort"></i></a>
+        {% endif %}
+    {% endspaceless %}
+{% endmacro %}
+
+{% from _self import thead %}
+
+{% block app_menu %}
+    {{ include("FlowerStockBundle::appnav.html.twig", { 'app_rawmaterial': true }) }}
+{% endblock %}
+
+
+{% block body %}
+    <section class="content-header">
+        <h1>
+            {{ '%entity% list'|trans({'%entity%': 'Stock\RawMaterial'}, 'Stock\RawMaterial') }}
+        </h1>
+    </section>
+    <section class="content">
+        <div class="box">
+            <div class="box-header">
+                <div class="box-tools pull-right"><a class="btn btn-link btn-sm"
+                                                     href={{ path('stock_rawmaterial_new') }}>
+                        <i class="fa fa-plus"></i> {{ 'Create a new %entity%'|trans({'%entity%': 'Stock\RawMaterial'}, 'Stock\RawMaterial') }}
+                    </a>
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table table-hover records_list table-condensed">
+                    <thead>
+                    <tr>
+                        <th scope="col">{{ thead('rawmaterial', 'name', 'Name') }}</th>
+                        <th scope="col">{{ thead('rawmaterial', 'stock', 'Stock') }}</th>
+                        <th scope="col">{{ thead('rawmaterial', 'enabled', 'Enabled') }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for rawmaterial in paginator %}
+                        <tr>
+
+                            <td>
+                                <a href="{{ path('stock_rawmaterial_show', {id: rawmaterial.id}) }}">{{ rawmaterial.name }}</a>
+                            </td>
+                            <td>{{ rawmaterial.stock }}</td>
+                            <td>{% if rawmaterial.enabled %}<i class="fa fa-check-square-o"></i>{% else %}<i
+                                        class="fa fa-square-o"></i>{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                {{ knp_pagination_render(paginator) }}
+            </div>
+            <div class="box-footer">
+
+            </div>
+
+    </section>
+
+{% endblock %}

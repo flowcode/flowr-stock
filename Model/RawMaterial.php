@@ -2,16 +2,15 @@
 
 namespace Flower\StockBundle\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
-use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
- * Product
+ * RawMaterial
  *
  */
-abstract class Product
+abstract class RawMaterial
 {
     /**
      * @var integer
@@ -34,14 +33,6 @@ abstract class Product
     /**
      * @var float
      *
-     * @ORM\Column(name="price", type="float")
-     * @Groups({"public_api"})
-     */
-    protected $price;
-
-    /**
-     * @var float
-     *
      * @ORM\Column(name="stock", type="integer")
      * @Groups({"public_api"})
      */
@@ -55,23 +46,15 @@ abstract class Product
     protected $enabled;
 
     /**
-     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\ProductCategory")
+     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\RawMaterialCategory")
      * @ORM\JoinColumn(name="category", referencedColumnName="id")
      * @Groups({"public_api"})
      */
     protected $category;
 
-    /**
-     * @OneToMany(targetEntity="\Flower\ModelBundle\Entity\Stock\ProductRawMaterial", mappedBy="product", cascade={"persist","remove"})
-     */
-    protected $rawMaterials;
-
-
     public function __construct()
     {
         $this->stock = 0;
-        $this->enabled = true;
-        $this->rawMaterials = new ArrayCollection();
     }
 
 
@@ -109,29 +92,6 @@ abstract class Product
     }
 
     /**
-     * Set price
-     *
-     * @param float $price
-     * @return Product
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    /**
-     * Get price
-     *
-     * @return float
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    /**
      * Set enabled
      *
      * @param boolean $enabled
@@ -157,10 +117,10 @@ abstract class Product
     /**
      * Set category
      *
-     * @param \Flower\ModelBundle\Entity\Stock\ProductCategory $category
+     * @param \Flower\ModelBundle\Entity\Stock\RawMaterialCategory $category
      * @return Product
      */
-    public function setCategory(\Flower\ModelBundle\Entity\Stock\ProductCategory $category = null)
+    public function setCategory(\Flower\ModelBundle\Entity\Stock\RawMaterialCategory $category = null)
     {
         $this->category = $category;
 
@@ -170,7 +130,7 @@ abstract class Product
     /**
      * Get category
      *
-     * @return \Flower\ModelBundle\Entity\Stock\ProductCategory
+     * @return \Flower\ModelBundle\Entity\Stock\RawMaterialCategory
      */
     public function getCategory()
     {
@@ -198,40 +158,4 @@ abstract class Product
     {
         return $this->name;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getRawMaterials()
-    {
-        return $this->rawMaterials;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function addRawMaterial(\Flower\ModelBundle\Entity\Stock\ProductRawMaterial $productRawMaterial)
-    {
-        $this->rawMaterials->add($productRawMaterial);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function removeRawMaterial(\Flower\ModelBundle\Entity\Stock\ProductRawMaterial $productRawMaterial)
-    {
-        if ($this->rawMaterials->contains($productRawMaterial)) {
-            $this->rawMaterials->removeElement($productRawMaterial);
-        }
-    }
-
-    /**
-     * @param mixed $rawMaterials
-     */
-    public function setRawMaterials($rawMaterials)
-    {
-        $this->rawMaterials = $rawMaterials;
-    }
-
-
 }

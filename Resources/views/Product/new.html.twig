@@ -16,17 +16,117 @@
         <div class="box">
             <div class="box-body">
                 {{ form_start(form, {action: path('product_create')}) }}
-                {{ form_widget(form) }}
+
+                {{ form_row(form.name) }}
+                {{ form_row(form.category) }}
+                {{ form_row(form.price) }}
+                {{ form_row(form.enabled) }}
+
+                <div class="raw-materials" id="contentMaterials">
+                    {% for productrawmaterial in form.rawMaterials %}
+                        <div class="form-group raw-materials">
+                            <div class="col-sm-3">
+                                {{ form_widget(productrawmaterial.rawMaterial) }}
+                            </div>
+                            <div class="col-sm-3">
+                                {{ form_widget(productrawmaterial.measureUnit) }}
+                            </div>
+                            <div class="col-sm-3">
+                                {{ form_widget(productrawmaterial.quantity) }}
+                            </div>
+                            <div class="col-sm-1">
+                                <button>
+                                    <i class="fa fa-close"></i>
+                                </button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
                 <p>
                     <button class="btn-default btn" type="submit">{{ 'Create'|trans({}, 'Product') }}</button>
                 </p>
+
+                <div class="hidden" id="productRawMaterialTemplate">
+                    <div class="form-group reminders">
+                        <div class="col-sm-3 field"
+                             data-prototype="{{ form_widget(form.rawMaterials.vars.prototype.rawMaterial)|e }}">
+                        </div>
+                        <div class="col-sm-3 field"
+                             data-prototype="{{ form_widget(form.rawMaterials.vars.prototype.measureUnit)|e }}">
+
+                        </div>
+                        <div class="col-sm-3 field"
+                             data-prototype="{{ form_widget(form.rawMaterials.vars.prototype.quantity)|e }}">
+                        </div>
+                        <div class="col-sm-2 tools">
+                        </div>
+                    </div>
+                </div>
+
                 {{ form_end(form) }}
+
+
             </div>
             <div class="box-footer">
-
                 <div class="btn-group record_actions"></div>
-
             </div>
+
         </div>
     </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        var tagARemove = '<button href="#">{{ "remove" | trans({}, "Event") }}</button>'
+        var tagAAddOther = '<div class="col-sm-2 col-xs-offset-2"><button href="#" class="add_tag_link">{{ "Add a Reminder" | trans({}, "Event") }}</button></div>'
+
+        var $collectionHolder;
+        var $addTagLink = $(tagAAddOther);
+        jQuery(document).ready(function () {
+            $collectionHolder = $('#contentMaterials');
+            $collectionHolder.append($addTagLink);
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+            $collectionHolder.find('.reminders').each(function () {
+                addReminderFormDeleteLink($(this));
+            });
+            $addTagLink.on('click', function (e) {
+                e.preventDefault();
+                addReminderForm($collectionHolder, $addTagLink);
+            });
+        });
+        function addReminderForm($collectionHolder, $newLink) {
+            var prototype = $("#productRawMaterialTemplate");
+            var index = $collectionHolder.data('index');
+
+            prototype.find('.field').each(function () {
+                var field = $(this);
+                field.append(field.data('prototype'));
+            });
+
+            var newForm = prototype.html().replace(/__name__/g, index);
+            newForm = $(newForm);
+            $collectionHolder.data('index', index + 1);
+            $newLink.before(newForm);
+            addReminderFormDeleteLink(newForm);
+
+            prototype.find('.field').each(function () {
+                $(this).empty();
+            });
+
+        }
+
+        function addReminderFormDeleteLink($tagFormLi) {
+            var $removeFormA = $(tagARemove);
+            $tagFormLi.find(".tools").append($removeFormA);
+            $removeFormA.on('click', function (e) {
+                e.preventDefault();
+                $tagFormLi.remove();
+            });
+        }
+
+    </script>
+
 {% endblock %}

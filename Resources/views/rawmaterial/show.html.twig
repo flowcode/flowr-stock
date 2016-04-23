@@ -1,33 +1,35 @@
 {% extends "FlowerCoreBundle::layout.html.twig" %}
 
-{% block title %}Product - {{ parent() }}{% endblock %}
+{% block title %}Stock\RawMaterial - {{ parent() }}{% endblock %}
 
 
 {% block app_menu %}
-    {{ include("FlowerStockBundle::appnav.html.twig", { 'app_product': true }) }}
+    {{ include("FlowerStockBundle::appnav.html.twig", { 'app_rawmaterial': true }) }}
 {% endblock %}
 
 {% block body %}
     <section class="content-header">
         <h1>
-            {{ product.name|title }}
+            <a href="{{ path('stock_rawmaterial') }}"> {{ 'Stock\RawMaterial list'|trans({'Stock\RawMaterial': 'Stock\RawMaterial'}, 'Stock\RawMaterial') }}</a>
+            /
+            {{ 'Stock\RawMaterial' | trans({}, 'Stock\RawMaterial') }}
         </h1>
     </section>
     <section class="content">
-        <div class="box" id='showProduct'>
+        <div class="box" id='showStock\RawMaterial'>
             <div class="box-header">
                 <div class="box-tools  pull-right">
                     {{ form_start(delete_form) }}
                     {{ form_widget(delete_form) }}
 
                     <div class="btn-group record_actions">
-                        <button class="btn btn-link btn-sm" type="submit"> {{ 'Delete'|trans({}, 'Product') }}</button>
+                        <button class="btn btn-link btn-sm"
+                                type="submit"> {{ 'Delete'|trans({}, 'Stock\RawMaterial') }}</button>
                         <input name="modal" type="hidden" value="0">
 
                         <a class="btn btn-link  btn-sm" onclick="showEdit(true)">
-                            {{ 'Edit'|trans({}, 'Product') }}
+                            {{ 'Edit'|trans({}, 'Stock\RawMaterial') }}
                         </a>
-
                     </div>
                     <input name="modal" type="hidden" value="0">
                     {{ form_end(delete_form) }}
@@ -38,33 +40,16 @@
                 <table class="table table-hover record_properties">
                     <tbody>
                     <tr>
-                        <th scope="row">{{ 'Name'|trans({}, 'Product') }}</th>
-                        <td>{{ product.name }}</td>
-                    </tr>
-                    {% if product.category %}
-                        <tr>
-                            <th scope="row">{{ 'Category'|trans({}, 'Product') }}</th>
-                            <td>{{ product.category }}</td>
-                        </tr>
-                    {% endif %}
-                    <tr>
-                        <th scope="row">{{ 'Price'|trans({}, 'Product') }}</th>
-                        <td>{{ product.price }}</td>
+                        <th scope="row">{{ 'Name'|trans({}, 'Stock\RawMaterial') }}</th>
+                        <td>{{ rawmaterial.name }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">{{ 'Stock'|trans({}, 'Product') }}</th>
-                        <td>
-                            {{ product.stock }}
-
-                            <a class="btn btn-warning btn-sm pull-right"
-                               href="{{ path('product_stock_increase',{'id':product.id}) }}">
-                                {{ 'increase_stock'|trans({}, 'Product')|title }}
-                            </a>
-                        </td>
+                        <th scope="row">{{ 'Stock'|trans({}, 'Stock\RawMaterial') }}</th>
+                        <td>{{ rawmaterial.stock }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">{{ 'Enabled'|trans({}, 'Product') }}</th>
-                        <td>{% if product.enabled %}<i class="fa fa-check-square-o"></i>{% else %}<i
+                        <th scope="row">{{ 'Enabled'|trans({}, 'Stock\RawMaterial') }}</th>
+                        <td>{% if rawmaterial.enabled %}<i class="fa fa-check-square-o"></i>{% else %}<i
                                     class="fa fa-square-o"></i>{% endif %}</td>
                     </tr>
                     </tbody>
@@ -74,13 +59,14 @@
 
             </div>
         </div>
-        <div class="box" id='editFormProduct' style="display: none;">
+        <div class="box" id='editFormStock\RawMaterial' style="display: none;">
             <div class="box-header">
                 <div class="box-tools">
                     {{ form_start(delete_form) }}
                     {{ form_widget(delete_form) }}
                     <div class="btn-group record_actions">
-                        <button class="btn btn-link btn-sm" type="submit"> {{ 'Delete'|trans({}, 'Product') }}</button>
+                        <button class="btn btn-link btn-sm"
+                                type="submit"> {{ 'Delete'|trans({}, 'Stock\RawMaterial') }}</button>
                         <a class="btn btn-link  btn-sm" onclick="showEdit(false)">
                             {{ 'Cancel'|trans({}, 'Account') }}
                         </a>
@@ -90,10 +76,11 @@
                 </div>
             </div>
             <div class="box-body">
+
                 {{ form_start(edit_form) }}
                 {{ form_widget(edit_form) }}
                 <p>
-                    <button class="btn-default btn" type="submit">{{ 'Save'|trans({}, 'Product') }}</button>
+                    <button class="btn-default btn" type="submit">{{ 'save'|trans | capitalize }}</button>
                 </p>
                 {{ form_end(edit_form) }}
             </div>
@@ -109,16 +96,17 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h3>{{ 'Confirm delete'|trans({}, 'Product') }}</h3>
+                    <h3>{{ 'Confirm delete'|trans({}, 'Stock\RawMaterial') }}</h3>
                 </div>
                 <div class="modal-body">
-                    <p>{{ 'You are about to delete an item'|trans({}, 'Product') }}
-                        , {{ 'this procedure is irreversible'|trans({}, 'Product') }}.</p>
-                    <p>{{ 'Do you want to proceed?'|trans({}, 'Product') }}</p>
+                    <p>{{ 'You are about to delete an item'|trans({}, 'Stock\RawMaterial') }}
+                        , {{ 'this procedure is irreversible'|trans({}, 'Stock\RawMaterial') }}.</p>
+                    <p>{{ 'Do you want to proceed?'|trans({}, 'Stock\RawMaterial') }}</p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-danger">{{ 'Yes'|trans({}, 'Product') }}</button>
-                    <button class="btn btn-default" data-dismiss="modal">{{ 'No'|trans({}, 'Product') }}</button>
+                    <button class="btn btn-danger">{{ 'Yes'|trans({}, 'Stock\RawMaterial') }}</button>
+                    <button class="btn btn-default"
+                            data-dismiss="modal">{{ 'No'|trans({}, 'Stock\RawMaterial') }}</button>
                 </div>
             </div>
         </div>
@@ -130,11 +118,11 @@
     <script type="text/javascript">
         function showEdit(show) {
             if (show) {
-                $('#showProduct').hide();
-                $('#editFormProduct').show();
+                $('#showStock\RawMaterial').hide();
+                $('#editFormStock\RawMaterial').show();
             } else {
-                $('#showProduct').show();
-                $('#editFormProduct').hide();
+                $('#showStock\RawMaterial').show();
+                $('#editFormStock\RawMaterial').hide();
             }
         }
 
