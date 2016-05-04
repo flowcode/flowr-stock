@@ -11,25 +11,39 @@
         </div>
     </div>
     <ul class="sidebar-menu">
+        <li {% if app_dashboard is defined %}class="active"{% endif %}>
+            <a href="{{ path('stock_dashboard') }}">
+                {{ 'dashboard'|trans({}, 'Service')|title }}
+            </a>
+        </li>
         <li {% if app_service is defined %}class="active"{% endif %}>
-            <a href="{{ path('service') }}">{{ '%entity% list'|trans({'%entity%': 'Service'}, 'Service') }}</a>
+            <a href="{{ path('service') }}">
+                {{ '%entity% list'|trans({'%entity%': 'Service'}, 'Service') }}
+            </a>
         </li>
-
         <li {% if app_product is defined %}class="active"{% endif %}>
-            <a href="{{ path('product') }}">{{ '%entity% list'|trans({'%entity%': 'Product'}, 'Product') }}</a>
+            <a href="{{ path('product') }}">
+                {{ '%entity% list'|trans({'%entity%': 'Product'}, 'Product')|title }}
+            </a>
         </li>
-
         <li {% if app_productcategory is defined %}class="active"{% endif %}>
-            <a href="{{ path('productcategory') }}">{{ '%entity% list'|trans({'%entity%': 'ProductCategory'}, 'ProductCategory') }}</a>
+            <a href="{{ path('productcategory') }}">
+                {{ '%entity% list'|trans({'%entity%': 'ProductCategory'}, 'ProductCategory')|title }}
+            </a>
         </li>
         <li {% if app_rawmaterial is defined %}class="active"{% endif %}>
             <a href="{{ path('stock_rawmaterial') }}">
-                {{ 'rawmaterial'|trans({'%entity%': 'RawMaterial'}, 'Product') }}
+                {{ 'rawmaterial'|trans({'%entity%': 'RawMaterial'}, 'Product')|title }}
             </a>
         </li>
         <li {% if app_rawmaterialcategory is defined %}class="active"{% endif %}>
             <a href="{{ path('stock_rawmaterialcategory') }}">
-                {{ 'rawmaterial_category'|trans({'%entity%': 'RawMaterialCategory'}, 'Product') }}
+                {{ 'rawmaterial_category'|trans({'%entity%': 'RawMaterialCategory'}, 'Product')|title }}
+            </a>
+        </li>
+        <li {% if app_rawmaterialcategory is defined %}class="active"{% endif %}>
+            <a href="{{ path('supplier') }}">
+                {{ 'suppliers'|trans({'%entity%': 'RawMaterialCategory'}, 'Product')|title }}
             </a>
         </li>
     </ul>

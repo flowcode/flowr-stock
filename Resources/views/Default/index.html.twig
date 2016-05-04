@@ -1,0 +1,121 @@
+{% extends "FlowerCoreBundle::layout.html.twig" %}
+
+{% block title %}{{ '%entity% list'|trans({'%entity%': 'Product'}, 'Product') }} - {{ parent() }}{% endblock %}
+
+{% block app_menu %}
+    {{ include("FlowerStockBundle::appnav.html.twig", { 'app_dashboard': true }) }}
+{% endblock %}
+
+{% block body %}
+    <section class="content-header">
+        <h1>
+            {{ 'stock'|trans|title }}
+        </h1>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="box box-default">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            {{ 'products'|trans|title }}
+                        </h3>
+                        <div class="box-tools pull-right">
+                            <a class="btn btn-link btn-sm" href={{ path('product_new') }}>
+                                <i class="fa fa-plus"></i> {{ 'Create a new %entity%'|trans({'%entity%': 'Product'}, 'Product') }}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-condensed">
+                            <tr>
+                                <th>
+                                    Total enabled
+                                </th>
+                                <td>
+                                    {{ stats.product_total_count }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Without stock
+                                </th>
+                                <td>
+                                    {{ stats.product_no_stock_count }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="box-footer">
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-sm-4">
+                <div class="box box-default">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            {{ 'rawmaterials'|trans|title }}
+                        </h3>
+                        <div class="box-tools pull-right">
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-condensed">
+                            <tr>
+                                <th>
+                                    Total enabled
+                                </th>
+                                <td>
+                                    {{ stats.rawmaterial_total_count }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    Without stock
+                                </th>
+                                <td>
+                                    {{ stats.rawmaterial_no_stock_count }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="box-footer">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="box box-default">
+                    <div class="box-header">
+                        <h3 class="box-title">
+                            {{ 'services'|trans|title }}
+                        </h3>
+                        <div class="box-tools pull-right">
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-condensed">
+                            <tr>
+                                <th>
+                                    Total enabled
+                                </th>
+                                <td>
+                                    {{ stats.service_total_count }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="box-footer">
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+{% endblock %}

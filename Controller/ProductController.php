@@ -184,6 +184,11 @@ class ProductController extends Controller
             'method' => 'PUT',
         ));
         if ($editForm->handleRequest($request)->isValid()) {
+
+            foreach ($product->getRawMaterials() as $productRawMaterial) {
+                $productRawMaterial->setProduct($product);
+            }
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirect($this->generateUrl('product_show', array('id' => $product->getId())));

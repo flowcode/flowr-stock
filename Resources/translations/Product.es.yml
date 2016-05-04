@@ -19,3 +19,11 @@ Save: Guardar
 'You are about to delete an item': 'Usted esta por borrar un elemento'
 'this procedure is irreversible': 'esta accion será irreversible'
 Category: Categoría
+
+rawmaterial: materia prima
+rawmaterial_category: categoría de materia prima
+increase_stock: aumentar stock
+affect_rawmaterial: afecta materia prima
+
+suppliers: proveedores
+supplier: proveedor

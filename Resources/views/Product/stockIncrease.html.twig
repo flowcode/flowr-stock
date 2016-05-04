@@ -10,7 +10,10 @@
 {% block body %}
     <section class="content-header">
         <h1>
-            {{ product.name|title }}
+            <a href="{{ path('product') }}">
+                {{ '%entity% list'|trans({'%entity%': 'Product'}, 'Product') }}
+            </a>
+            / {{ product.name|title }}
         </h1>
     </section>
     <section class="content">
@@ -38,7 +41,7 @@
 
                     <div class="form-group">
                         <label class="col-sm-2 control-label">
-                            Affect raw materials
+                            {{ 'affect_rawmaterial'|trans({}, 'Product')|title }}
                         </label>
                         <div class="col-sm-8">
                             <input type="checkbox" name="affect_raw_materials" checked>

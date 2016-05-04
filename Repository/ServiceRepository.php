@@ -12,4 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class ServiceRepository extends EntityRepository
 {
+    public function getTotalCount()
+    {
+        $qb = $this->createQueryBuilder('s');
+
+        $qb->select('COUNT(s)');
+        $qb->where('s.enabled = :enabled')->setParameter('enabled', true);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

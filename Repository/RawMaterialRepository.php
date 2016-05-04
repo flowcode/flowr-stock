@@ -12,4 +12,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class RawMaterialRepository extends EntityRepository
 {
+    public function getTotalCount()
+    {
+        $qb = $this->createQueryBuilder('rm');
+
+        $qb->select('COUNT(rm)');
+        $qb->where('rm.enabled = :enabled')->setParameter('enabled', true);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getTotalCountWithouhStock()
+    {
+        $qb = $this->createQueryBuilder('rm');
+
+        $qb->select('COUNT(rm)');
+        $qb->where('rm.stock <= 0');
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

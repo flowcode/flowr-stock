@@ -2,9 +2,20 @@
 
 {% block title %}{{ '%entity% edit'|trans({'%entity%': 'Product'}, 'Product') }} - {{ parent() }}{% endblock %}
 
+{% block app_menu %}
+    {{ include("FlowerStockBundle::appnav.html.twig", { 'app_product': true }) }}
+{% endblock %}
+
 {% block body %}
+    <section class="content-header">
+        <h1>
+            <a href="{{ path('product') }}">
+                {{ '%entity% list'|trans({'%entity%': 'Product'}, 'Product') }}
+            </a>
+            /{{ '%entity% edit'|trans({'%entity%': 'Product'}, 'Product') }}
+        </h1>
+    </section>
     <section class="content">
-        {{ include("FlowerStockBundle::appnav.html.twig", {  }) }}
         <div class="box">
             <div class="box-body">
 
@@ -13,25 +24,60 @@
                 {{ form_row(edit_form.name) }}
                 {{ form_row(edit_form.category) }}
                 {{ form_row(edit_form.price) }}
-                {{ form_row(edit_form.stock) }}
                 {{ form_row(edit_form.enabled) }}
 
-                <table class="table table-condensed">
-                    <tbody class="raw-materials"
-                           data-prototype="{{ form_widget(edit_form.rawMaterials.vars.prototype)|e }}">
-                    {% for productrawmaterial in edit_form.rawMaterials %}
-                        <tr>
-                            <td>{{ form_widget(productrawmaterial.rawMaterial) }}</td>
-                            <td>{{ form_widget(productrawmaterial.quantity) }}</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
+                <div class="form-group">
 
-                <p>
-                    <button class="btn-default btn" type="submit"><i
-                                class="fa fa-edit"></i> {{ 'Save'|trans({}, 'Product') }}</button>
-                </p>
+                    {{ form_label(edit_form.rawMaterials) }}
+
+                    <div class="col-sm-10">
+                        <div class="raw-materials" id="contentMaterials">
+                            {% for productrawmaterial in edit_form.rawMaterials %}
+                                <div class="form-group raw-materials">
+                                    <div class="col-sm-3">
+                                        {{ form_widget(productrawmaterial.rawMaterial) }}
+                                    </div>
+                                    <div class="col-sm-3">
+                                        {{ form_widget(productrawmaterial.measureUnit) }}
+                                    </div>
+                                    <div class="col-sm-3">
+                                        {{ form_widget(productrawmaterial.quantity) }}
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button>
+                                            <i class="fa fa-close"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <button class="btn-default btn" type="submit"><i
+                                    class="fa fa-edit"></i> {{ 'Save'|trans({}, 'Product') }}</button>
+                    </div>
+                </div>
+
+                <div class="hidden" id="productRawMaterialTemplate">
+                    <div class="form-group reminders">
+                        <div class="col-sm-3 field"
+                             data-prototype="{{ form_widget(edit_form.rawMaterials.vars.prototype.rawMaterial)|e }}">
+                        </div>
+                        <div class="col-sm-3 field"
+                             data-prototype="{{ form_widget(edit_form.rawMaterials.vars.prototype.measureUnit)|e }}">
+
+                        </div>
+                        <div class="col-sm-3 field"
+                             data-prototype="{{ form_widget(edit_form.rawMaterials.vars.prototype.quantity)|e }}">
+                        </div>
+                        <div class="col-sm-2 tools">
+                        </div>
+                    </div>
+                </div>
+
                 {{ form_end(edit_form) }}
             </div>
             <div class="box-footer">
@@ -42,7 +88,6 @@
                 <div class="btn-group record_actions">
                     <button class="btn btn-link btn-sm" type="submit"> {{ 'Delete'|trans({}, 'Product') }}</button>
                     <input name="modal" type="hidden" value="0">
-
                 </div>
                 <input name="modal" type="hidden" value="0">
                 {{ form_end(delete_form) }}
@@ -52,4 +97,11 @@
     </section>
 {% endblock %}
 
-
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var tagARemove = '<button href="#">{{ "remove" | trans({}, "Event") }}</button>'
+        var tagAAddOther = '<div class="col-sm-2 col-xs-offset-2"><button href="#" class="add_tag_link">{{ "Add a Reminder" | trans({}, "Event") }}</button></div>'
+    </script>
+    <script src="{{ asset('bundles/flowerstock/js/rawmaterials.js') }}"></script>
+{% endblock %}

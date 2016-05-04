@@ -12,4 +12,23 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductRepository extends EntityRepository
 {
+    public function getTotalCount()
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        $qb->select('COUNT(p)');
+        $qb->where('p.enabled = :enabled')->setParameter('enabled', true);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getTotalCountWithouhStock()
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        $qb->select('COUNT(p)');
+        $qb->where('p.stock <= 0');
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }
