@@ -35,11 +35,9 @@ class StockService implements ContainerAwareInterface
                 $rawMaterial = $productRawMaterial->getRawMaterial();
                 $previousRMStock = $rawMaterial->getStock();
 
-                $rawMaterial->setStock($previousRMStock - $productRawMaterial->getQuantity());
+                $rawMaterial->setStock($previousRMStock - ($quantity * $productRawMaterial->getQuantity()));
             }
-
         }
-
         $em->flush();
     }
 
@@ -56,6 +54,37 @@ class StockService implements ContainerAwareInterface
         $product->setStock($previousStock - $quantity);
 
         $em->flush();
+    }
+
+    /**
+     * Upload user image.
+     *
+     * @param Product $entity
+     * @return Product
+     */
+    public function uploadImage(Product $entity)
+    {
+
+        /* the file property can be empty if the field is not required */
+        if (null === $entity->getFile()) {
+            return $entity;
+        }
+
+        $uploadBaseDir = $this->container->getParameter("uploads_base_dir");
+        $uploadDir = $this->container->getParameter("product_dir");
+
+        /* set the path property to the filename where you've saved the file */
+        $filename = $entity->getFile()->getClientOriginalName();
+        $extension = $entity->getFile()->getClientOriginalExtension();
+
+        $imageName = md5($filename . time()) . '.' . $extension;
+
+        $entity->setImage($uploadDir . $imageName);
+        $entity->getFile()->move($uploadBaseDir . $uploadDir, $imageName);
+
+        $entity->setFile(null);
+
+        return $entity;
     }
 
     /**

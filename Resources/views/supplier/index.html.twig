@@ -18,6 +18,9 @@
 
 {% from _self import thead %}
 
+{% block app_menu %}
+    {{ include("FlowerStockBundle::appnav.html.twig", { 'app_supplier': true }) }}
+{% endblock %}
 
 {% block body %}
     <section class="content-header">

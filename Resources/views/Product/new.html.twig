@@ -19,7 +19,9 @@
 
                 {{ form_row(form.name) }}
                 {{ form_row(form.category) }}
-                {{ form_row(form.price) }}
+                {{ form_row(form.salePrice) }}
+                {{ form_row(form.costPrice) }}
+                {{ form_row(form.supplier) }}
                 {{ form_row(form.enabled) }}
 
                 <div class="raw-materials" id="contentMaterials">
@@ -43,9 +45,11 @@
                     {% endfor %}
                 </div>
 
-                <p>
-                    <button class="btn-default btn" type="submit">{{ 'Create'|trans({}, 'Product') }}</button>
-                </p>
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <button class="btn-default btn" type="submit">{{ 'Create'|trans({}, 'Product') }}</button>
+                    </div>
+                </div>
 
                 <div class="hidden" id="productRawMaterialTemplate">
                     <div class="form-group reminders">
@@ -77,7 +81,7 @@
     {{ parent() }}
     <script>
         var tagARemove = '<button href="#">{{ "remove" | trans({}, "Event") }}</button>'
-        var tagAAddOther = '<div class="col-sm-2 col-xs-offset-2"><button href="#" class="add_tag_link">{{ "Add a Reminder" | trans({}, "Event") }}</button></div>'
+        var tagAAddOther = '<div class="col-sm-2 col-xs-offset-2"><button href="#" class="add_tag_link">{{ "Add a rawMaterial" | trans({}, "Product") }}</button></div>'
     </script>
     <script src="{{ asset('bundles/flowerstock/js/rawmaterials.js') }}"></script>
 {% endblock %}

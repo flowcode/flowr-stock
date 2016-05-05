@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping\OneToMany;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Product
@@ -32,12 +34,28 @@ abstract class Product
     protected $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", length=255, nullable=true)
+     * @Groups({"kanban", "full", "public"})
+     */
+    protected $image;
+
+    /**
      * @var float
      *
-     * @ORM\Column(name="price", type="float")
+     * @ORM\Column(name="sale_price", type="float", nullable=true)
      * @Groups({"public_api"})
      */
-    protected $price;
+    protected $salePrice;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="cost_price", type="float", nullable=true)
+     * @Groups({"public_api"})
+     */
+    protected $costPrice;
 
     /**
      * @var float
@@ -61,10 +79,23 @@ abstract class Product
      */
     protected $category;
 
+
     /**
      * @OneToMany(targetEntity="\Flower\ModelBundle\Entity\Stock\ProductRawMaterial", mappedBy="product", cascade={"persist","remove"})
      */
     protected $rawMaterials;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Clients\Account")
+     * @ORM\JoinColumn(name="supplier_id", referencedColumnName="id")
+     * @Groups({"public_api"})
+     */
+    protected $supplier;
+
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    protected $file;
 
 
     public function __construct()
@@ -231,6 +262,86 @@ abstract class Product
     public function setRawMaterials($rawMaterials)
     {
         $this->rawMaterials = $rawMaterials;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSupplier()
+    {
+        return $this->supplier;
+    }
+
+    /**
+     * @param mixed $supplier
+     */
+    public function setSupplier($supplier)
+    {
+        $this->supplier = $supplier;
+    }
+
+    /**
+     * @return float
+     */
+    public function getSalePrice()
+    {
+        return $this->salePrice;
+    }
+
+    /**
+     * @param float $salePrice
+     */
+    public function setSalePrice($salePrice)
+    {
+        $this->salePrice = $salePrice;
+    }
+
+    /**
+     * @return float
+     */
+    public function getCostPrice()
+    {
+        return $this->costPrice;
+    }
+
+    /**
+     * @param float $costPrice
+     */
+    public function setCostPrice($costPrice)
+    {
+        $this->costPrice = $costPrice;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param UploadedFile $file
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
     }
 
 

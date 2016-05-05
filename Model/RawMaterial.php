@@ -52,6 +52,13 @@ abstract class RawMaterial
      */
     protected $category;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Clients\Account")
+     * @ORM\JoinColumn(name="supplier_id", referencedColumnName="id")
+     * @Groups({"public_api"})
+     */
+    protected $supplier;
+
     public function __construct()
     {
         $this->stock = 0;
@@ -151,6 +158,22 @@ abstract class RawMaterial
     public function setStock($stock)
     {
         $this->stock = $stock;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSupplier()
+    {
+        return $this->supplier;
+    }
+
+    /**
+     * @param mixed $supplier
+     */
+    public function setSupplier($supplier)
+    {
+        $this->supplier = $supplier;
     }
 
 

@@ -136,6 +136,8 @@ class ProductController extends Controller
                 $productRawMaterial->setProduct($product);
             }
 
+            $product = $this->get('flower.stock.service.stock')->uploadImage($product);
+
             $em->persist($product);
             $em->flush();
 
@@ -188,6 +190,8 @@ class ProductController extends Controller
             foreach ($product->getRawMaterials() as $productRawMaterial) {
                 $productRawMaterial->setProduct($product);
             }
+
+            $product = $this->get('flower.stock.service.stock')->uploadImage($product);
 
             $this->getDoctrine()->getManager()->flush();
 

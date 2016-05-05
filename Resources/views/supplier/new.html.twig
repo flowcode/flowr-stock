@@ -2,6 +2,10 @@
 
 {% block title %}{{ '%entity% creation'|trans({'%entity%': 'Supplier'}, 'Supplier') }} - {{ parent() }}{% endblock %}
 
+{% block app_menu %}
+    {{ include("FlowerStockBundle::appnav.html.twig", { 'app_supplier': true }) }}
+{% endblock %}
+
 {% block body %}
     <section class="content-header">
         <h1>

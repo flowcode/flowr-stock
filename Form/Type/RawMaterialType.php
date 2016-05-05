@@ -14,12 +14,11 @@ class RawMaterialType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        
             ->add('name')
             ->add('stock')
             ->add('enabled')
-            ->add('category')
-        ;
+            ->add('supplier')
+            ->add('category');
     }
 
     /**

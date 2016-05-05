@@ -42,11 +42,12 @@
                 </div>
             </div>
             <div class="box-body">
-                <table class="table table-hover records_list table-condensed">
+                <table class="table table-hover">
                     <thead>
                     <tr>
+                        <th scope="col"></th>
                         <th scope="col">{{ thead('product', 'name', 'Name') }}</th>
-                        <th scope="col">{{ thead('product', 'price', 'Price') }}</th>
+                        <th scope="col">{{ thead('product', 'salePrice', 'Sale price') }}</th>
                         <th scope="col">{{ thead('product', 'stock', 'Stock') }}</th>
                         <th scope="col">{{ thead('product', 'enabled', 'Enabled') }}</th>
                     </tr>
@@ -54,8 +55,17 @@
                     <tbody>
                     {% for product in paginator %}
                         <tr>
-                            <td><a href="{{ path('product_show', {id: product.id}) }}">{{ product.name }}</a></td>
-                            <td>{{ product.price }}</td>
+                            <td>
+                                <a href="{{ path('product_show', {id: product.id}) }}">
+                                    <img src="{{ product.image }}" class="img-responsive" style="max-width: 30px">
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{{ path('product_show', {id: product.id}) }}">
+                                    {{ product.name }}
+                                </a>
+                            </td>
+                            <td>{{ product.salePrice }}</td>
                             <td>{{ product.stock }}</td>
                             <td>
                                 {% if product.enabled %}
