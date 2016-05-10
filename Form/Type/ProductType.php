@@ -19,6 +19,12 @@ class ProductType extends AbstractType
             ->add('category', null, array("required" => true))
             ->add('salePrice')
             ->add('costPrice')
+            ->add('forSale', null, array(
+                'label' => 'isForSale',
+            ))
+            ->add('rawMaterial', null, array(
+                'label' => 'isRawMaterial',
+            ))
             ->add('supplier')
             ->add('file', null, array(
                 'label' => 'image',

@@ -31,16 +31,10 @@ class StockLevel
     private $name;
 
     /**
-     * @ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\Product", inversedBy="rawMaterials")
+     * @ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\Product")
      * @JoinColumn(name="product_id", referencedColumnName="id")
      */
     protected $product;
-
-    /**
-     * @ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\RawMaterial")
-     * @JoinColumn(name="raw_material_id", referencedColumnName="id")
-     */
-    protected $rawMaterial;
 
     /**
      * @var integer

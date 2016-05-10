@@ -33,13 +33,14 @@ class DefaultController extends Controller
         $stats = array(
             'product_total_count' => $em->getRepository('FlowerModelBundle:Stock\Product')->getTotalCount(),
             'product_no_stock_count' => $em->getRepository('FlowerModelBundle:Stock\Product')->getTotalCountWithouhStock(),
-            'rawmaterial_total_count' => $em->getRepository('FlowerModelBundle:Stock\RawMaterial')->getTotalCount(),
-            'rawmaterial_no_stock_count' => $em->getRepository('FlowerModelBundle:Stock\RawMaterial')->getTotalCountWithouhStock(),
+            'rawmaterial_total_count' => 0,
+            'rawmaterial_no_stock_count' => 0,
             'service_total_count' => $em->getRepository('FlowerModelBundle:Stock\Service')->getTotalCount(),
         );
 
         return array(
             'stats' => $stats,
+            'pending_sales' => $em->getRepository('FlowerModelBundle:Sales\Sale')->getByStatus(array(2)),
         );
     }
 

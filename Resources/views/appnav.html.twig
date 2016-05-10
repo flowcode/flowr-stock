@@ -31,20 +31,5 @@
                 {{ '%entity% list'|trans({'%entity%': 'ProductCategory'}, 'ProductCategory')|title }}
             </a>
         </li>
-        <li {% if app_rawmaterial is defined %}class="active"{% endif %}>
-            <a href="{{ path('stock_rawmaterial') }}">
-                {{ 'rawmaterial'|trans({'%entity%': 'RawMaterial'}, 'Product')|title }}
-            </a>
-        </li>
-        <li {% if app_rawmaterialcategory is defined %}class="active"{% endif %}>
-            <a href="{{ path('stock_rawmaterialcategory') }}">
-                {{ 'rawmaterial_category'|trans({'%entity%': 'RawMaterialCategory'}, 'Product')|title }}
-            </a>
-        </li>
-        <li {% if app_rawmaterialcategory is defined %}class="active"{% endif %}>
-            <a href="{{ path('supplier') }}">
-                {{ 'suppliers'|trans({'%entity%': 'RawMaterialCategory'}, 'Product')|title }}
-            </a>
-        </li>
     </ul>
 </section>

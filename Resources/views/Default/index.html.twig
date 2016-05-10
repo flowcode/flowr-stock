@@ -92,21 +92,23 @@
                 <div class="box box-default">
                     <div class="box-header">
                         <h3 class="box-title">
-                            {{ 'services'|trans|title }}
+                            {{ 'sales'|trans|title }}
                         </h3>
                         <div class="box-tools pull-right">
                         </div>
                     </div>
                     <div class="box-body">
                         <table class="table table-condensed">
+                            {% for sale in pending_sales %}
                             <tr>
-                                <th>
-                                    Total enabled
-                                </th>
                                 <td>
-                                    {{ stats.service_total_count }}
+                                    {{ sale.id }}
+                                </td>
+                                <td>
+                                    {{ sale.total }}
                                 </td>
                             </tr>
+                            {% endfor %}
                         </table>
                     </div>
                     <div class="box-footer">

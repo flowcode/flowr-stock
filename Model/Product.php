@@ -73,6 +73,20 @@ abstract class Product
     protected $enabled;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="raw_material", type="boolean")
+     */
+    protected $rawMaterial;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="for_sale", type="boolean")
+     */
+    protected $forSale;
+
+    /**
      * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\ProductCategory")
      * @ORM\JoinColumn(name="category", referencedColumnName="id")
      * @Groups({"public_api"})
@@ -102,6 +116,8 @@ abstract class Product
     {
         $this->stock = 0;
         $this->enabled = true;
+        $this->forSale = false;
+        $this->rawMaterial = false;
         $this->rawMaterials = new ArrayCollection();
     }
 
@@ -342,6 +358,38 @@ abstract class Product
     public function setFile($file)
     {
         $this->file = $file;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getForSale()
+    {
+        return $this->forSale;
+    }
+
+    /**
+     * @param mixed $forSale
+     */
+    public function setForSale($forSale)
+    {
+        $this->forSale = $forSale;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRawMaterial()
+    {
+        return $this->rawMaterial;
+    }
+
+    /**
+     * @param mixed $rawMaterial
+     */
+    public function setRawMaterial($rawMaterial)
+    {
+        $this->rawMaterial = $rawMaterial;
     }
 
 

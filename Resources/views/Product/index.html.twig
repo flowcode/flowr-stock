@@ -48,6 +48,8 @@
                         <th scope="col"></th>
                         <th scope="col">{{ thead('product', 'name', 'Name') }}</th>
                         <th scope="col">{{ thead('product', 'salePrice', 'Sale price') }}</th>
+                        <th scope="col">{{ thead('product', 'forSale', 'isForSale') }}</th>
+                        <th scope="col">{{ thead('product', 'rawMaterial', 'isRawMaterial') }}</th>
                         <th scope="col">{{ thead('product', 'stock', 'Stock') }}</th>
                         <th scope="col">{{ thead('product', 'enabled', 'Enabled') }}</th>
                     </tr>
@@ -66,6 +68,8 @@
                                 </a>
                             </td>
                             <td>{{ product.salePrice }}</td>
+                            <td>{{ product.forSale }}</td>
+                            <td>{{ product.rawMaterial }}</td>
                             <td>{{ product.stock }}</td>
                             <td>
                                 {% if product.enabled %}

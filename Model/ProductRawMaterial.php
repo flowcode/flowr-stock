@@ -30,7 +30,7 @@ abstract class ProductRawMaterial
     protected $product;
 
     /**
-     * @ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\RawMaterial")
+     * @ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\Product")
      * @JoinColumn(name="raw_material_id", referencedColumnName="id")
      */
     protected $rawMaterial;

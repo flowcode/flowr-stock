@@ -33,3 +33,5 @@ Add a rawMaterial: Agregar materia prima
 
 Sale price: Precio de venta
 Cost price: Precio de compra
+isForSale: Disponible para venta
+isRawMaterial: Es materia prima
