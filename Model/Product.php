@@ -89,7 +89,6 @@ abstract class Product
     /**
      * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Stock\ProductCategory")
      * @ORM\JoinColumn(name="category", referencedColumnName="id")
-     * @Groups({"public_api"})
      */
     protected $category;
 
@@ -102,7 +101,6 @@ abstract class Product
     /**
      * @ORM\ManyToOne(targetEntity="\Flower\ModelBundle\Entity\Clients\Account")
      * @ORM\JoinColumn(name="supplier_id", referencedColumnName="id")
-     * @Groups({"public_api"})
      */
     protected $supplier;
 

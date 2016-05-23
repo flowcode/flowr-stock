@@ -68,8 +68,20 @@
                                 </a>
                             </td>
                             <td>{{ product.salePrice }}</td>
-                            <td>{{ product.forSale }}</td>
-                            <td>{{ product.rawMaterial }}</td>
+                            <td>
+                                {% if product.forSale %}
+                                    <span>{{ 'yes'|trans }}</span>
+                                {% else %}
+                                    <span>{{ 'no'|trans }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if product.rawMaterial %}
+                                    <span>{{ 'yes'|trans }}</span>
+                                {% else %}
+                                    <span>{{ 'no'|trans }}</span>
+                                {% endif %}
+                            </td>
                             <td>{{ product.stock }}</td>
                             <td>
                                 {% if product.enabled %}

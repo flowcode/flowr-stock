@@ -44,8 +44,8 @@ class StockLevel
     private $stock;
 
     /**
-     * @ManyToOne(targetEntity="\Flower\CoreBundle\Entity\NotificationChannel")
-     * @JoinColumn(name="raw_material_id", referencedColumnName="id")
+     * @ManyToOne(targetEntity="\Flower\CoreBundle\Entity\NotificationChannelImpl")
+     * @JoinColumn(name="notification_channel_id", referencedColumnName="id")
      */
     protected $notificationChannel;
 
@@ -104,5 +104,51 @@ class StockLevel
     public function getStock()
     {
         return $this->stock;
+    }
+
+    /**
+     * Set product
+     *
+     * @param \Flower\ModelBundle\Entity\Stock\Product $product
+     * @return StockLevel
+     */
+    public function setProduct(\Flower\ModelBundle\Entity\Stock\Product $product = null)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \Flower\ModelBundle\Entity\Stock\Product 
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Set notificationChannel
+     *
+     * @param \Flower\CoreBundle\Entity\NotificationChannel $notificationChannel
+     * @return StockLevel
+     */
+    public function setNotificationChannel(\Flower\CoreBundle\Entity\NotificationChannel $notificationChannel = null)
+    {
+        $this->notificationChannel = $notificationChannel;
+
+        return $this;
+    }
+
+    /**
+     * Get notificationChannel
+     *
+     * @return \Flower\CoreBundle\Entity\NotificationChannel
+     */
+    public function getNotificationChannel()
+    {
+        return $this->notificationChannel;
     }
 }

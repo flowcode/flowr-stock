@@ -12,6 +12,17 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ProductController extends FOSRestController
 {
+
+    public function getForSaleAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $products = $em->getRepository('FlowerModelBundle:Stock\Product')->findBy(array("enabled" => true, "forSale" => true));
+
+        $view = FOSView::create($products, Codes::HTTP_OK)->setFormat('json');
+        $view->getSerializationContext()->setGroups(array('public_api'));
+        return $this->handleView($view);
+    }
+
     public function getAllAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();

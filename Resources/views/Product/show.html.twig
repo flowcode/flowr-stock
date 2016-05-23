@@ -63,9 +63,13 @@
                                 <td>
                                     {{ product.stock }}
 
-                                    <a class="btn btn-warning btn-sm pull-right"
+                                    <a class="btn btn-warning btn-xs pull-right"
                                        href="{{ path('product_stock_increase',{'id':product.id}) }}">
-                                        {{ 'increase_stock'|trans({}, 'Product')|title }}
+                                        <i class="ionicons ion-plus-circled"></i> {{ 'register_stock_entry'|trans({}, 'Product')|title }}
+                                    </a>
+                                    <a class="btn btn-info btn-xs pull-right"
+                                       href="{{ path('product_stock_decrease',{'id':product.id}) }}">
+                                        <i class="ionicons ion-minus-circled"></i> {{ 'register_stock_exit'|trans({}, 'Product')|title }}
                                     </a>
                                 </td>
                             </tr>
@@ -98,26 +102,75 @@
 
         </div>
 
+        {% if not product.rawMaterial %}
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">
+                        {{ 'composition'|trans({}, 'Product')|title }}
+                    </h3>
+                </div>
+                <div class="box-body">
+                    <table class="table table-hover record_properties">
+                        <thead>
+                        <th>Material</th>
+                        <th>{{ 'measure unit'|trans({}, 'Product')|title }}</th>
+                        <th>{{ 'quantity'|trans({}, 'Product')|title }}</th>
+                        </thead>
+                        <tbody>
+                        {% for productRawMaterial in product.rawMaterials %}
+                            <tr>
+                                <td>{{ productRawMaterial.rawMaterial }}</td>
+                                <td>{{ productRawMaterial.measureUnit }}</td>
+                                <td>{{ productRawMaterial.quantity }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-footer">
 
+                </div>
+            </div>
+        {% endif %}
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">
-                    {{ 'Composition'|trans|title }}
+                    {{ 'changelog'|trans({}, 'Product')|title }}
                 </h3>
             </div>
             <div class="box-body">
                 <table class="table table-hover record_properties">
                     <thead>
-                    <th>Material</th>
-                    <th>Unit of measurement</th>
-                    <th>Quantity</th>
+                    <th>{{ 'date'|trans({}, 'Product')|title }}</th>
+                    <th>{{ 'type'|trans({}, 'Product')|title }}</th>
+
+
+                    <th>{{ 'cause'|trans({}, 'Product')|title }}</th>
+
+
+                    <th>{{ 'amount'|trans({}, 'Product')|title }}</th>
+                    <th>{{ 'balance'|trans({}, 'Product')|title }}</th>
                     </thead>
                     <tbody>
-                    {% for productRawMaterial in product.rawMaterials %}
+                    {% for changeLog in changeLogs %}
                         <tr>
-                            <td>{{ productRawMaterial.rawMaterial }}</td>
-                            <td>{{ productRawMaterial.measureUnit }}</td>
-                            <td>{{ productRawMaterial.quantity }}</td>
+                            <td>{{ changeLog.date|date }}</td>
+                            <td>
+                                {% if changeLog.type == 0 %}
+                                    <span class="text-green">{{ 'stock_entry'|trans({}, 'Product')|title }}</span>
+                                {% else %}
+                                    <span class="text-warning">{{ 'stock_exit'|trans({}, 'Product')|title }}</span>
+                                {% endif %}
+                            </td>
+
+                            {% if product.forSale and changeLog.type == 1 %}
+                                <td>{{ 'sale'|trans({}, 'Sale') }}: {{ changeLog.sale }}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+
+                            <td>{{ changeLog.amount }}</td>
+                            <td>{{ changeLog.balance }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

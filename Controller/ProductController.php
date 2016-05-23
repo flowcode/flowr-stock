@@ -67,7 +67,43 @@ class ProductController extends Controller
 
             $stockService = $this->get('flower.stock.service.stock');
 
-            $stockService->increaseProduct($product, $request->get('quantity'));
+            $stockService->increaseProduct($product, $request->get('quantity'), true, $request->get('comments'));
+
+            return $this->redirect($this->generateUrl('product_show', array('id' => $product->getId())));
+        }
+
+        return $this->redirect($this->generateUrl('product_stock_increase', array('id' => $product->getId())));
+    }
+
+    /**
+     * Finds and displays a Product entity.
+     *
+     * @Route("/{id}/stock_increase", name="product_stock_decrease", requirements={"id"="\d+"})
+     * @Method("GET")
+     * @Template()
+     */
+    public function stockDecreaseAction(Product $product)
+    {
+        return array(
+            'product' => $product,
+        );
+    }
+
+    /**
+     * Finds and displays a Product entity.
+     *
+     * @Route("/{id}/stock_increase", name="product_stock_do_decrease", requirements={"id"="\d+"})
+     * @Method("POST")
+     * @Template()
+     */
+    public function stockDecreaseDoAction(Request $request, Product $product)
+    {
+
+        if ($request->get('quantity')) {
+
+            $stockService = $this->get('flower.stock.service.stock');
+
+            $stockService->decreaseProduct($product, $request->get('quantity'), $request->get('comments'));
 
             return $this->redirect($this->generateUrl('product_show', array('id' => $product->getId())));
         }
@@ -90,12 +126,15 @@ class ProductController extends Controller
         ));
         $deleteForm = $this->createDeleteForm($product->getId(), 'product_delete');
 
-        return array(
+        $em = $this->getDoctrine()->getManager();
 
+        $changeLogs = $em->getRepository('FlowerStockBundle:StockChangeLog')->findBy(array("product" => $product), array("date" => "DESC"), 10);
+
+        return array(
             'product' => $product,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-
+            'changeLogs' => $changeLogs,
         );
     }
 

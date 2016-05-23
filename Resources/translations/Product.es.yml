@@ -22,16 +22,32 @@ Category: Categoría
 
 rawmaterial: materia prima
 rawmaterial_category: categoría de materia prima
-increase_stock: aumentar stock
+register_stock_entry: Registrar entrada de stock
+register_stock_exit: Registrar salida de stock
 affect_rawmaterial: afecta materia prima
+measure unit: unidad de medida
+quantity: cantidad
 
 suppliers: proveedores
 supplier: proveedor
 Supplier: Proveedor
 
 Add a rawMaterial: Agregar materia prima
+Add item: Agregar
 
 Sale price: Precio de venta
 Cost price: Precio de compra
 isForSale: Disponible para venta
 isRawMaterial: Es materia prima
+
+composition: composición
+
+# changelog
+changelog: Registro de cambios
+stock_entry: Entrada
+stock_exit: Salida
+date: fecha
+type: tipo
+amount: cantidad
+balance: balance
+cause: motivo

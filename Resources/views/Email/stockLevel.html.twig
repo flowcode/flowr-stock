@@ -1,0 +1,24 @@
+{% extends ':Email:layout.html.twig' %}
+ {% block header %}
+
+ {% endblock %}
+ {% block body %}
+     <table align="left" class="" id="element2" style="">
+         <tbody>
+         <tr>
+             <td style="">
+
+             </td>
+         </tr>
+         <tr>
+             <td style="">
+                 <a href="{{ app.request.getSchemeAndHttpHost() }}{{ path('product_show',{'id':product.id}) }}"
+                    style="color: #CC3E32;text-decoration: none;">
+                     <h3>{{ product.name | capitalize }}</h3>
+                 </a>
+             </td>
+         </tr>
+         </tbody>
+     </table>
+
+ {% endblock %}

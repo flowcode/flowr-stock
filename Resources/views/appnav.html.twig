@@ -26,6 +26,11 @@
                 {{ '%entity% list'|trans({'%entity%': 'Product'}, 'Product')|title }}
             </a>
         </li>
+        <li {% if app_stock_level is defined %}class="active"{% endif %}>
+            <a href="{{ path('stock_stocklevel') }}">
+                {{ 'stockLevels'|trans({}, 'Product')|title }}
+            </a>
+        </li>
         <li {% if app_productcategory is defined %}class="active"{% endif %}>
             <a href="{{ path('productcategory') }}">
                 {{ '%entity% list'|trans({'%entity%': 'ProductCategory'}, 'ProductCategory')|title }}
