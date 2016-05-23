@@ -3,7 +3,7 @@
 {% block title %}{{ '%entity% creation'|trans({'%entity%': 'StockLevel'}, 'StockLevel') }} - {{ parent() }}{% endblock %}
 
 {% block app_menu %}
-    {{ include("FlowerStockBundle::appnav.html.twig", { 'app_stock_level': true }) }}
+    {{ include("FlowerStockBundle::appnav.html.twig", { 'app_product': true, 'app_stock_level': true }) }}
 {% endblock %}
 
 {% block body %}

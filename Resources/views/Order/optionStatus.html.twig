@@ -1,0 +1,8 @@
+{% for status in options_statuses %}
+    <form action="{{ path('stock_order_change_status', {'id':sale.id}) }}" method="post">
+        <input value="{{ status.id }}" type="hidden" name="status_to">
+        <button type="submit" class="btn btn-default">
+            {{ status.name }}
+        </button>
+    </form>
+{% endfor %}

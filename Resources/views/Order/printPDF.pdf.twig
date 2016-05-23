@@ -1,0 +1,189 @@
+<pdf>
+    <dynamic-page>
+        <table>
+            <tr>
+                {% if sale.circuit == 1 %}
+                    <td border.type="none" width="250px" font-size="10px">
+                        <img padding-left="30px" height="100px"
+                             src="{{ kernelRootDir }}/../web{{ organization_settings.getValue('logo') }}"/>
+                        <p text-align="center" padding="0px">
+                            {{ organization_settings.getValue('organization_title') }}
+                        </p>
+                        <p text-align="center" padding="0px">
+                            Lavalle 910 2-E
+                        </p>
+                        <p text-align="center" padding="0px">
+                            Ciudad Autónoma de Buenos Aires
+                        </p>
+                        <p text-align="center" padding="0px">
+                            myflowr.com - contacto@myflowr.com
+                        </p>
+                        <p text-align="center" padding="0px">
+                            Tel.:+54 123123
+                        </p>
+                        <p text-align="center" padding="0px" padding-bottom="20px">
+                            Responsable Inscripto
+                        </p>
+
+                    </td>
+                {% endif %}
+                <td border.type="none"></td>
+                <td border.type="none">
+                    <h1 text-align="left" padding="0px">ORDEN DE PEDIDO</h1>
+                    <p text-align="left" padding="0px" font-size="10px">DOCUMENTO NO VALIDO COMO FACTURA</p>
+                    <h3 padding="0px" text-align="left">FECHA: {{ sale.created | date("smallDate"| trans) }}</h3>
+                    {% if sale.circuit == 1 %}
+                        <p text-align="left" padding="0px">C.U.I.T: 20-123123123-7</p>
+                        <p text-align="left" padding="0px">Ingr. Brutos: CM 111-222222-3</p>
+                        <p text-align="left" padding="0px">Fecha de inicio: 11/2011</p>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+
+
+        <table class="table table-striped table-hover table-bordered records_list">
+            <tr>
+                <td background.color="black" color="white"
+                    padding="5px">{{ 'Company data' | trans({},'Sale') | upper }}</td>
+                <td border.type="none"></td>
+            </tr>
+            <tr>
+                <td padding="5px">{{ 'name' | trans({},'Sale') | capitalize }}</td>
+                <td padding="5px">{{ sale.account.name }}</td>
+            </tr>
+            <tr>
+                <td padding="5px">{{ 'businessName' | trans({},'Sale') | capitalize }}</td>
+                <td padding="5px">{{ sale.account.businessName }}</td>
+            </tr>
+            <tr>
+                <td padding="5px">{{ 'activity' | trans({},'Sale') | capitalize }}</td>
+                <td padding="5px">{{ sale.account.activity }}</td>
+            </tr>
+            <tr>
+                <td padding="5px">{{ 'CUIT' | trans({},'Sale')| capitalize }}</td>
+                <td padding="5px">{{ sale.account.cuit }}</td>
+            </tr>
+        </table>
+        <h3></h3>
+        <table class="table table-striped table-hover table-bordered records_list">
+            <tr>
+                <td background.color="black" color="white"
+                    padding="5px">{{ 'Contact Information' | trans({},'Sale') | upper }}</td>
+                <td border.type="none"></td>
+            </tr>
+            <tr>
+                <td padding="5px">{{ 'name' | trans({},'Sale') | capitalize }}</td>
+                <td padding="5px">{{ sale.contact.happyName }}</td>
+            </tr>
+            <tr>
+                <td padding="5px">{{ 'phone' | trans({},'Sale') | capitalize }}</td>
+                <td padding="5px">{{ sale.contact.phone }}</td>
+            </tr>
+            <tr>
+                <td padding="5px">{{ 'email' | trans({},'Sale') | capitalize }}</td>
+                <td padding="5px">{{ sale.contact.email }}</td>
+            </tr>
+        </table>
+        <h3></h3>
+        <table class="table table-striped table-hover table-bordered records_list">
+
+            <tr>
+                <td background.color="black" color="white" colspan="2"
+                    padding="5px">{{ 'Description' | trans({},'Sale') | upper }}</td>
+            </tr>
+            <tr background.color="lightgray">
+                <td padding="5px">{{ 'Product' | trans({},'Sale') }}</td>
+                <td padding="5px">{{ 'Units' | trans({},'Sale') }}</td>
+                <td padding="5px">{{ 'Units Price' | trans({},'Sale') }}</td>
+                <td padding="5px">{{ 'Total' | trans({},'Sale') }}</td>
+            </tr>
+            {% for item in sale.saleItems %}
+                <tr>
+                    <td padding="5px">
+                        {% if item.product %}
+                            {{ item.product }}
+                        {% else %}
+                            {{ item.service }}
+                        {% endif %}
+                    </td>
+                    <td padding="5px">{{ item.units }}</td>
+                    <td padding="5px">{{ item.unitPrice }}</td>
+                    <td padding="5px">{{ item.total }}</td>
+                </tr>
+            {% endfor %}
+            {% if sale.discount %}
+                <tr>
+                    <td padding="5px">
+                    </td>
+                    <td padding="5px">
+                    </td>
+                    <td padding="5px" background.color="lightgray">
+                        {{ 'Discount' | trans({},'Sale') }}
+                        (
+                        {% if sale.discountType == 1 %}
+                            %
+                        {% else %}
+                            -$
+                        {% endif %}
+                        {{ sale.discount }})
+                    </td>
+                    <td padding="5px">{{ sale.totalDiscount }}</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <td padding="5px"></td>
+                <td padding="5px"></td>
+                <td padding="5px" background.color="lightgray">{{ 'Total' | trans({},'Sale') }}</td>
+                <td padding="5px">{{ sale.total }}</td>
+            </tr>
+            {% if sale.circuit == 1 %}
+                <tr>
+                    <td padding="5px"></td>
+                    <td padding="5px"></td>
+                    <td padding="5px" background.color="lightgray">{{ 'Tax' | trans({},'Sale') }}</td>
+                    <td padding="5px">{{ sale.tax }}</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <td padding="5px"></td>
+                <td padding="5px"></td>
+                <td padding="5px" background.color="lightgray">{{ 'Totalwithtax' | trans({},'Sale') }}</td>
+                <td padding="5px">{{ sale.totalWithTax }}</td>
+            </tr>
+        </table>
+        <h2>
+            Forma depago
+        </h2>
+        <div>
+            <table width="300px">
+                <tr>
+                    {% for paymentMethod in paymentMethods %}
+                        <td border.type="none" width="15px">
+                            {% if paymentMethod.id == sale.paymentmethod.id %}
+                                <img width="10px" float='left'
+                                     src="{{ pdf_image('FlowerCoreBundle:assets/checked.jpg') }}"/>
+                            {% else %}
+                                <img width="10px" float='left'
+                                     src="{{ pdf_image('FlowerCoreBundle:assets/not-checked.jpg') }}"/>
+                            {% endif %}
+                        </td>
+                        <td border.type="none">
+                            {{ paymentMethod.name }}
+                        </td>
+                    {% endfor %}
+                </tr>
+            </table>
+            <p>
+                {{ sale.paymentObservations }}
+            </p>
+
+
+        </div>
+        <h2>Observaciones</h2>
+        <p>
+            {{ sale.observations }}
+        </p>
+        Fecha:{{ sale.created | date("smallDate" | trans) }}
+    </dynamic-page>
+</pdf>

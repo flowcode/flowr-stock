@@ -23,7 +23,7 @@
 
 
 {% block app_menu %}
-    {{ include("FlowerStockBundle::appnav.html.twig", { 'app_product': true }) }}
+    {{ include("FlowerStockBundle::appnav.html.twig", { 'app_product': true, 'app_product_list': true }) }}
 {% endblock %}
 
 {% block body %}
@@ -42,6 +42,26 @@
                 </div>
             </div>
             <div class="box-body">
+                <div class="">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <input name="q" class="form-control"  type="text" value="{{ q }}" id="product-query" placeholder="Buscar">
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" {% if isRawMaterial %}checked{% endif %} name="is_rawmaterial"> {{ 'isRawMaterial'|trans({}, 'Product') }}
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-default">
+                            <i class="fa fa-search"></i> Buscar
+                        </button>
+                    </form>
+                </div>
+
+                <hr>
+
                 <table class="table table-hover">
                     <thead>
                     <tr>

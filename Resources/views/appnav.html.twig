@@ -21,16 +21,27 @@
                 {{ '%entity% list'|trans({'%entity%': 'Service'}, 'Service') }}
             </a>
         </li>
-        <li {% if app_product is defined %}class="active"{% endif %}>
-            <a href="{{ path('product') }}">
-                {{ '%entity% list'|trans({'%entity%': 'Product'}, 'Product')|title }}
+        <li class="treeview {% if app_product is defined %}active{% endif %}">
+            <a href="#">
+                <span>
+                    {{ '%entity% list'|trans({'%entity%': 'Product'}, 'Product')|title }}
+                </span>
+                <i class="fa fa-angle-left pull-right"></i>
             </a>
+            <ul class="treeview-menu">
+                <li {% if app_product_list is defined %}class="active"{% endif %}>
+                    <a href="{{ path('product') }}">
+                        {{ 'product list'|trans({}, 'Product')|title }}
+                    </a>
+                </li>
+                <li {% if app_stock_level is defined %}class="active"{% endif %}>
+                    <a href="{{ path('stock_stocklevel') }}">
+                        {{ 'stockLevels'|trans({}, 'Product')|title }}
+                    </a>
+                </li>
+            </ul>
         </li>
-        <li {% if app_stock_level is defined %}class="active"{% endif %}>
-            <a href="{{ path('stock_stocklevel') }}">
-                {{ 'stockLevels'|trans({}, 'Product')|title }}
-            </a>
-        </li>
+
         <li {% if app_productcategory is defined %}class="active"{% endif %}>
             <a href="{{ path('productcategory') }}">
                 {{ '%entity% list'|trans({'%entity%': 'ProductCategory'}, 'ProductCategory')|title }}

@@ -14,7 +14,7 @@ use Doctrine\ORM\QueryBuilder;
 /**
  * Setting controller.
  *
- * @Route("/admin/setting")
+ * @Route("/admin/stock/setting")
  */
 class SettingController extends Controller
 {

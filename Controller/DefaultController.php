@@ -3,6 +3,7 @@
 namespace Flower\StockBundle\Controller;
 
 use Flower\ModelBundle\Entity\Stock\ProductRawMaterial;
+use Flower\StockBundle\Entity\Setting;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -38,9 +39,17 @@ class DefaultController extends Controller
             'service_total_count' => $em->getRepository('FlowerModelBundle:Stock\Service')->getTotalCount(),
         );
 
+        $stockStatus = $em->getRepository('FlowerStockBundle:Setting')->findBy(array(
+            'name' => Setting::STOCK_VIEWABLE_SALE_STATUS,
+        ));
+        $viewableStatuses = array();
+        foreach ($stockStatus as $status){
+            $viewableStatuses[] = $status->getValue();
+        }
+
         return array(
             'stats' => $stats,
-            'pending_sales' => $em->getRepository('FlowerModelBundle:Sales\Sale')->getByStatus(array(2)),
+            'pending_sales' => $em->getRepository('FlowerModelBundle:Sales\Sale')->getByStatus($viewableStatuses),
         );
     }
 

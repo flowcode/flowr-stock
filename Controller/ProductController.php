@@ -30,10 +30,24 @@ class ProductController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('FlowerModelBundle:Stock\Product')->createQueryBuilder('p');
+
+        $productQuery = $request->get('q');
+        if ($productQuery) {
+            $qb->andWhere('p.name LIKE :name')->setParameter('name', '%' . $productQuery . '%');
+        }
+
+        $isRawMaterial = false;
+        if ($request->get('is_rawmaterial', false)) {
+            $isRawMaterial = true;
+            $qb->andWhere('p.rawMaterial = :is_rawmaterial')->setParameter('is_rawmaterial', true);
+        }
+
         $this->addQueryBuilderSort($qb, 'product');
-        $paginator = $this->get('knp_paginator')->paginate($qb, $request->query->get('page', 1), 20);
+        $paginator = $this->get('knp_paginator')->paginate($qb, $request->get('page', 1), 20);
 
         return array(
+            'isRawMaterial' => $isRawMaterial,
+            'q' => $productQuery,
             'paginator' => $paginator,
         );
     }

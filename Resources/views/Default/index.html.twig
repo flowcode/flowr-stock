@@ -30,7 +30,7 @@
                         <table class="table table-condensed">
                             <tr>
                                 <th>
-                                    Total enabled
+                                    {{ 'count_enabled'|trans({}, 'Product')|title }}
                                 </th>
                                 <td>
                                     {{ stats.product_total_count }}
@@ -38,7 +38,7 @@
                             </tr>
                             <tr>
                                 <th>
-                                    Without stock
+                                    {{ 'count_without_stock'|trans({}, 'Product')|title }}
                                 </th>
                                 <td>
                                     {{ stats.product_no_stock_count }}
@@ -50,14 +50,11 @@
 
                     </div>
                 </div>
-            </div>
 
-
-            <div class="col-sm-4">
                 <div class="box box-default">
                     <div class="box-header">
                         <h3 class="box-title">
-                            {{ 'rawmaterials'|trans|title }}
+                            {{ 'rawmaterials'|trans({}, 'Product')|title }}
                         </h3>
                         <div class="box-tools pull-right">
                         </div>
@@ -66,7 +63,7 @@
                         <table class="table table-condensed">
                             <tr>
                                 <th>
-                                    Total enabled
+                                    {{ 'count_enabled'|trans({}, 'Product')|title }}
                                 </th>
                                 <td>
                                     {{ stats.rawmaterial_total_count }}
@@ -74,7 +71,7 @@
                             </tr>
                             <tr>
                                 <th>
-                                    Without stock
+                                    {{ 'count_without_stock'|trans({}, 'Product')|title }}
                                 </th>
                                 <td>
                                     {{ stats.rawmaterial_no_stock_count }}
@@ -88,27 +85,46 @@
                 </div>
             </div>
 
-            <div class="col-sm-4">
+
+            <div class="col-sm-8">
                 <div class="box box-default">
                     <div class="box-header">
                         <h3 class="box-title">
-                            {{ 'sales'|trans|title }}
+                            {{ 'orders'|trans({}, 'Sale')|title }}
                         </h3>
                         <div class="box-tools pull-right">
                         </div>
                     </div>
                     <div class="box-body">
                         <table class="table table-condensed">
-                            {% for sale in pending_sales %}
+                            <thead>
                             <tr>
-                                <td>
-                                    {{ sale.id }}
-                                </td>
-                                <td>
-                                    {{ sale.total }}
-                                </td>
+                                <th>#</th>
+                                <th>Cliente</th>
+                                <th>Estado</th>
+                                <th>Actualizado</th>
                             </tr>
+                            </thead>
+                            <tbody>
+                            {% for sale in pending_sales %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ path('stock_order_show',{'id':sale.id}) }}">
+                                            {{ sale.id }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{ sale.account }}
+                                    </td>
+                                    <td>
+                                        {{ include('FlowerSalesBundle:Sale:status_text.html.twig',{'status': sale.status}) }}
+                                    </td>
+                                    <td>
+                                        {{ sale.updated|date }}
+                                    </td>
+                                </tr>
                             {% endfor %}
+                            </tbody>
                         </table>
                     </div>
                     <div class="box-footer">

@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Setting
 {
+
+    const STOCK_VIEWABLE_SALE_STATUS = 'stock_viewable_order_status';
+
     /**
      * @var integer
      *
