@@ -99,7 +99,7 @@ class StockService implements ContainerAwareInterface
                 $handlerId = "flower.core.service.notification_handler." . $notificationChannel->getType();
                 $notificationChannelHandler = $this->container->get($handlerId);
 
-                $notificationChannelHandler->handle($notificationChannel, array("product" => $product));
+                $notificationChannelHandler->handle($notificationChannel, array("product" => $product, "level" => $stockLevel->getStock()));
             }
         }
     }

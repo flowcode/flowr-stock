@@ -12,22 +12,36 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProductRepository extends EntityRepository
 {
-    public function getTotalCount()
+    /**
+     * @param array $params
+     * @return mixed
+     */
+    public function getTotalCount(array $params = array())
     {
         $qb = $this->createQueryBuilder('p');
 
         $qb->select('COUNT(p)');
         $qb->where('p.enabled = :enabled')->setParameter('enabled', true);
+        if (isset($params['is_rawmaterial'])) {
+            $qb->andWhere('p.rawMaterial= :is_rawmaterial')->setParameter('is_rawmaterial', $params['is_rawmaterial']);
+        }
 
         return $qb->getQuery()->getSingleScalarResult();
     }
 
-    public function getTotalCountWithouhStock()
+    /**
+     * @param array $params
+     * @return mixed
+     */
+    public function getTotalCountWithouhStock(array $params = array())
     {
         $qb = $this->createQueryBuilder('p');
 
         $qb->select('COUNT(p)');
         $qb->where('p.stock <= 0');
+        if (isset($params['is_rawmaterial'])) {
+            $qb->andWhere('p.rawMaterial= :is_rawmaterial')->setParameter('is_rawmaterial', $params['is_rawmaterial']);
+        }
 
         return $qb->getQuery()->getSingleScalarResult();
     }

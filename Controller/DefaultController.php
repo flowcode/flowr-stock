@@ -34,16 +34,19 @@ class DefaultController extends Controller
         $stats = array(
             'product_total_count' => $em->getRepository('FlowerModelBundle:Stock\Product')->getTotalCount(),
             'product_no_stock_count' => $em->getRepository('FlowerModelBundle:Stock\Product')->getTotalCountWithouhStock(),
-            'rawmaterial_total_count' => 0,
-            'rawmaterial_no_stock_count' => 0,
-            'service_total_count' => $em->getRepository('FlowerModelBundle:Stock\Service')->getTotalCount(),
+            'rawmaterial_total_count' => $em->getRepository('FlowerModelBundle:Stock\Product')->getTotalCount(array(
+                'is_rawmaterial' => true,
+            )),
+            'rawmaterial_no_stock_count' => $em->getRepository('FlowerModelBundle:Stock\Product')->getTotalCountWithouhStock(array(
+                'is_rawmaterial' => true,
+            )),
         );
 
         $stockStatus = $em->getRepository('FlowerStockBundle:Setting')->findBy(array(
             'name' => Setting::STOCK_VIEWABLE_SALE_STATUS,
         ));
         $viewableStatuses = array();
-        foreach ($stockStatus as $status){
+        foreach ($stockStatus as $status) {
             $viewableStatuses[] = $status->getValue();
         }
 
