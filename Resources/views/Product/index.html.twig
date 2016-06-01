@@ -45,18 +45,45 @@
                 <div class="">
                     <form class="form-inline">
                         <div class="form-group">
-                            <input name="q" class="form-control"  type="text" value="{{ q }}" id="product-query" placeholder="Buscar">
+                            <input name="q" class="form-control input-xlarge" type="text" value="{{ filter.q }}" id="product-query"
+                                   placeholder="Buscar">
+                        </div>
+                        <div class="form-group">
+                            <select name="filter_category" class="form-control">
+                                <option value="">{{ 'Category'|trans({},'Product') }}</option>
+                                {% for category in availableCategories %}
+                                    <option value="{{ category.id }}"
+                                            {% if filter.category == category.id %}selected{% endif %}>
+                                        {{ category }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-default">
+                            <i class="fa fa-search"></i> {{ 'search'|trans|title }}
+                        </button>
+
+                        <a class="btn btn-default btn-sm" href="{{ path('product') }}?reset">
+                            <i class="fa fa-times"></i> {{ 'clean' | trans | capitalize }}
+                        </a>
+
+                        <br>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" {% if filter.is_rawmaterial %}checked{% endif %}
+                                           name="is_rawmaterial"> {{ 'isRawMaterial'|trans({}, 'Product') }}
+                                </label>
+                            </div>
                         </div>
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" {% if isRawMaterial %}checked{% endif %} name="is_rawmaterial"> {{ 'isRawMaterial'|trans({}, 'Product') }}
+                                    <input type="checkbox" {% if filter.is_enabled %}checked{% endif %}
+                                           name="is_enabled"> {{ 'Enabled'|trans({}, 'Product') }}
                                 </label>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-default">
-                            <i class="fa fa-search"></i> Buscar
-                        </button>
                     </form>
                 </div>
 
@@ -67,7 +94,7 @@
                     <tr>
                         <th scope="col"></th>
                         <th scope="col">{{ thead('product', 'name', 'Name') }}</th>
-                        <th scope="col">{{ thead('product', 'category', 'Category') }}</th>
+                        <th scope="col">{{ thead('product', 'c.name', 'Category') }}</th>
                         <th scope="col">{{ thead('product', 'forSale', 'isForSale') }}</th>
                         <th scope="col">{{ thead('product', 'rawMaterial', 'isRawMaterial') }}</th>
                         <th scope="col">{{ thead('product', 'stock', 'Stock') }}</th>

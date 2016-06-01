@@ -28,26 +28,41 @@ class ProductController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $filter = array(
+            'q' => $request->get('q'),
+            'category' => $request->get('filter_category'),
+            'is_rawmaterial' => $request->get('is_rawmaterial', false),
+            'is_enabled' => $request->get('is_enabled', true),
+        );
         $em = $this->getDoctrine()->getManager();
         $qb = $em->getRepository('FlowerModelBundle:Stock\Product')->createQueryBuilder('p');
+        $qb->join('p.category', 'c');
 
-        $productQuery = $request->get('q');
-        if ($productQuery) {
-            $qb->andWhere('p.name LIKE :name')->setParameter('name', '%' . $productQuery . '%');
+
+        if ($filter['q']) {
+            $qb->andWhere('p.name LIKE :name')->setParameter('name', '%' . $filter['q'] . '%');
         }
 
-        $isRawMaterial = false;
-        if ($request->get('is_rawmaterial', false)) {
-            $isRawMaterial = true;
+        if ($filter['category']) {
+            $qb->andWhere('c.id =:category_id')->setParameter('category_id', $filter['category']);
+        }
+
+        if ($filter['is_rawmaterial']) {
             $qb->andWhere('p.rawMaterial = :is_rawmaterial')->setParameter('is_rawmaterial', true);
         }
+
+        if ($filter['is_enabled']) {
+            $qb->andWhere('p.enabled = :is_enabled')->setParameter('is_enabled', true);
+        }
+
+        $availableCategories = $em->getRepository('FlowerModelBundle:Stock\ProductCategory')->findBy(array());
 
         $this->addQueryBuilderSort($qb, 'product');
         $paginator = $this->get('knp_paginator')->paginate($qb, $request->get('page', 1), 20);
 
         return array(
-            'isRawMaterial' => $isRawMaterial,
-            'q' => $productQuery,
+            'availableCategories' => $availableCategories,
+            'filter' => $filter,
             'paginator' => $paginator,
         );
     }
@@ -301,7 +316,11 @@ class ProductController extends Controller
     {
         $alias = current($qb->getDQLPart('from'))->getAlias();
         if (is_array($order = $this->getOrder($name))) {
-            $qb->orderBy($alias . '.' . $order['field'], $order['type']);
+            if (strpos($order['field'], '.') !== FALSE){
+                $qb->orderBy($order['field'], $order['type']);
+            }else{
+                $qb->orderBy($alias . '.' . $order['field'], $order['type']);
+            }
         }
     }
 
