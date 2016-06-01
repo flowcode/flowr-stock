@@ -107,7 +107,7 @@ class ProductController extends Controller
     /**
      * Finds and displays a Product entity.
      *
-     * @Route("/{id}/stock_increase", name="product_stock_decrease", requirements={"id"="\d+"})
+     * @Route("/{id}/stock_decrease", name="product_stock_decrease", requirements={"id"="\d+"})
      * @Method("GET")
      * @Template()
      */
@@ -121,7 +121,7 @@ class ProductController extends Controller
     /**
      * Finds and displays a Product entity.
      *
-     * @Route("/{id}/stock_increase", name="product_stock_do_decrease", requirements={"id"="\d+"})
+     * @Route("/{id}/stock_decrease", name="product_stock_do_decrease", requirements={"id"="\d+"})
      * @Method("POST")
      * @Template()
      */
@@ -132,7 +132,7 @@ class ProductController extends Controller
 
             $stockService = $this->get('flower.stock.service.stock');
 
-            $stockService->decreaseProduct($product, $request->get('quantity'), $request->get('comments'));
+            $stockService->decreaseProduct($product, $request->get('quantity'), null, $request->get('comments'));
 
             return $this->redirect($this->generateUrl('product_show', array('id' => $product->getId())));
         }

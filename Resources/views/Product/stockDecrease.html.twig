@@ -20,14 +20,14 @@
         <div class="box" id='showProduct'>
             <div class="box-header">
                 <h3 class="box-title">
-                    {{ 'register_stock_entry'|trans({}, 'Product')|title }}
+                    {{ 'register_stock_exit'|trans({}, 'Product')|title }}
                 </h3>
                 <div class="box-tools  pull-right">
                 </div>
             </div>
             <div class="box-body">
 
-                <form action="{{ path('product_stock_do_increase',{'id':product.id}) }}" method="post"
+                <form action="{{ path('product_stock_do_decrease',{'id':product.id}) }}" method="post"
                       class="form-horizontal">
 
                     <div class="form-group">

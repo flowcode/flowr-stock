@@ -60,3 +60,4 @@ type: tipo
 amount: cantidad
 balance: balance
 cause: motivo
+comments: comentarios

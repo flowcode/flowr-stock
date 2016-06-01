@@ -25,7 +25,7 @@ class StockService implements ContainerAwareInterface
      * @param int $quantity
      * @param bool $affectRawMaterialStock
      */
-    public function increaseProduct(Product $product, $quantity = 1, $affectRawMaterialStock = true, $comments = null)
+    public function increaseProduct(Product $product, $quantity = 1, $affectRawMaterialStock = true, $comments = null, \DateTime $date = null)
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
 
@@ -34,13 +34,17 @@ class StockService implements ContainerAwareInterface
         $previousStock = $product->getStock();
         $product->setStock($previousStock + $quantity);
 
+        if (!$date) {
+            $date = new \DateTime();
+        }
+
         /* stock change log */
         $stockChangeLog = new StockChangeLog();
         $stockChangeLog->setProduct($product);
         $stockChangeLog->setAmount($quantity);
         $stockChangeLog->setBalance($previousStock + $quantity);
         $stockChangeLog->setType(StockChangeLog::TYPE_ENTRY);
-        $stockChangeLog->setDate(new \DateTime());
+        $stockChangeLog->setDate($date);
         $stockChangeLog->setDescription($comments);
 
         $em->persist($stockChangeLog);
@@ -59,7 +63,7 @@ class StockService implements ContainerAwareInterface
      * @param Product $product
      * @param int $quantity
      */
-    public function decreaseProduct(Product $product, $quantity = 1, Sale $sale = null, $comments = null)
+    public function decreaseProduct(Product $product, $quantity = 1, Sale $sale = null, $comments = null, \DateTime $date = null)
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
 
@@ -67,13 +71,17 @@ class StockService implements ContainerAwareInterface
         $previousStock = $product->getStock();
         $product->setStock($previousStock - $quantity);
 
+        if (!$date) {
+            $date = new \DateTime();
+        }
+
         /* stock change log */
         $stockChangeLog = new StockChangeLog();
         $stockChangeLog->setProduct($product);
         $stockChangeLog->setAmount($quantity);
         $stockChangeLog->setBalance($previousStock - $quantity);
         $stockChangeLog->setType(StockChangeLog::TYPE_EXIT);
-        $stockChangeLog->setDate(new \DateTime());
+        $stockChangeLog->setDate($date);
         $stockChangeLog->setSale($sale);
         $stockChangeLog->setDescription($comments);
 
