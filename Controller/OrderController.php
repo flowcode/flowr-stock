@@ -136,6 +136,70 @@ class OrderController extends BaseController
     /**
      * Finds and displays a Sale entity.
      *
+     * @Route("/{id}/prepare", name="stock_order_prepare", requirements={"id"="\d+"})
+     * @Method("GET")
+     * @Template("FlowerStockBundle:Order:prepare.html.twig")
+     */
+    public function prepareAction(Request $request, Sale $sale)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $nextStatus = $request->get('status_to');
+
+        $products = $em->getRepository('FlowerModelBundle:Stock\Product')->findBy(array("enabled" => true));
+
+        return array(
+            'sale' => $sale,
+            'next_status' => $nextStatus,
+            'products' => $products,
+        );
+    }
+
+    /**
+     * Finds and displays a Sale entity.
+     *
+     * @Route("/{id}/prepare_do", name="stock_order_prepare_do", requirements={"id"="\d+"})
+     * @Method("GET")
+     * @Template("FlowerStockBundle:Order:prepare.html.twig")
+     */
+    public function prepareDoAction(Request $request, Sale $sale)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $items = $request->get('item');
+
+        $stockService = $this->get('flower.stock.service.stock');
+        $statusTo = $em->getRepository('FlowerModelBundle:Sales\SaleStatus')->find($request->get('status_to'));
+
+        /* manage stock */
+        foreach ($items as $itemId => $item) {
+
+            /* prepare product */
+            $saleItem = $em->getRepository('FlowerModelBundle:Sales\SaleItem')->find($itemId);
+
+            $product = $saleItem->getProduct();
+            $stockService->increaseProduct($product, $item['units'], false, "Preparación custom");
+
+            //FIXME: Chequear que esta modificando stock.
+            /* decrease custom raw materials */
+            foreach ($item['rawMaterials'] as $rawMaterial) {
+                $productRaw = $em->getRepository('FlowerModelBundle:Stock\Product')->find($rawMaterial['rawMaterial']);
+                $stockService->decreaseProduct($productRaw, $item['units'] * $rawMaterial['quantity'], $sale);
+            }
+
+            /* descrease sale product */
+            $stockService->decreaseProduct($product, $item['units'], $sale);
+
+        }
+
+        $sale->setStatus($statusTo);
+        $em->flush();
+
+
+        return $this->redirect($this->generateUrl('stock_order_show', array('id' => $sale->getId())));
+    }
+
+    /**
+     * Finds and displays a Sale entity.
+     *
      * @Route("/{id}/change_status", name="stock_order_change_status", requirements={"id"="\d+"})
      * @Method("POST")
      * @Template("FlowerStockBundle:Order:show.html.twig")
@@ -145,6 +209,10 @@ class OrderController extends BaseController
         $em = $this->getDoctrine()->getManager();
 
         $statusTo = $em->getRepository('FlowerModelBundle:Sales\SaleStatus')->find($request->get('status_to'));
+
+        if ($statusTo->isStockModifier()) {
+            return $this->redirect($this->generateUrl('stock_order_prepare', array('id' => $sale->getId(), "status_to" => $request->get('status_to'))));
+        }
 
         $sale->setStatus($statusTo);
         $em->flush();

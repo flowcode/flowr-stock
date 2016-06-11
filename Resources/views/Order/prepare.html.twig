@@ -1,0 +1,147 @@
+{% extends "FlowerCoreBundle::layout.html.twig" %}
+
+{% block title %}{{ '%entity% creation'|trans({'%entity%': 'Sale'}, 'Sale') }} - {{ parent() }}{% endblock %}
+
+{% block app_menu %}
+    {{ include("FlowerStockBundle::appnav.html.twig", { 'app_orders': true }) }}
+{% endblock %}
+
+{% block body %}
+    <section class="content-header">
+        <h1>
+            <a href="{{ path('stock_order') }}">
+                {{ 'orders'|trans({}, 'Sale')|title }}
+            </a>
+        </h1>
+    </section>
+    <section class="content">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">
+                    {{ 'sale_order'|trans({}, 'Sale')|title }}: {{ sale }}
+                    {{ include('FlowerSalesBundle:Sale:status.html.twig',{'status': sale.status}) }}
+                </h3>
+                <div class="box-tools">
+                </div>
+            </div>
+            <div class="box-body">
+                FECHA: {{ sale.created | date("smallDate"| trans) }}</h3>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    {{ 'Company data' | trans({},'Sale') | upper }}
+                                </th>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    {{ 'name' | trans({},'Sale') | capitalize }}
+                                </th>
+                                <td padding="5px">
+                                    {{ sale.account.name }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    {{ 'businessName' | trans({},'Sale') | capitalize }}
+                                </th>
+                                <td>
+                                    {{ sale.account.businessName }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    {{ 'CUIT' | trans({},'Sale')| capitalize }}
+                                </th>
+                                <td>
+                                    {{ sale.account.cuit }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form action="{{ path('stock_order_prepare_do', { 'id': sale.id }) }}" name="item">
+                            <div>
+                                <button type="submit" class="btn btn-success btn-lg">
+                                    Confirmar
+                                </button>
+                            </div>
+                            <br>
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                {% for item in sale.saleItems %}
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingOne">
+                                            <h4 class="panel-title">
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion"
+                                                   href="#collapse{{ item.id }}" aria-expanded="true"
+                                                   aria-controls="collapseOne">
+                                                    {% if item.product %}
+                                                        {{ item.product }}
+                                                    {% endif %}
+                                                </a>
+
+                                                <span class="pull-right">
+                                                {{ item.units }}
+                                                </span>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse{{ item.id }}" class="panel-collapse collapse" role="tabpanel"
+                                             aria-labelledby="headingOne">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <label class="col-sm-2">Cantidad:</label>
+                                                        <div class="col-sm-3">
+                                                         <input value="{{ item.units }}"
+                                                               name="item[{{ item.id }}][units]"
+                                                               type="text"
+                                                               class="form-control"
+                                                        >
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <label>Composicion:</label>
+
+                                                {% if item.product %}
+                                                    {% for productRawMaterial in item.product.rawMaterials %}
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <select name="item[{{ item.id }}][rawMaterials][{{ loop.index0 }}][rawMaterial]" class="form-control">
+                                                                    {% for productToChange in products %}
+                                                                        <option value="{{ productToChange.id }}" {% if productToChange.id == productRawMaterial.rawMaterial.id %}selected{% endif %}>
+                                                                            {{ productToChange }}
+                                                                        </option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                {{ productRawMaterial.measureUnit }}
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <input value="{{ productRawMaterial.quantity }}"
+                                                                       name="item[{{ item.id }}][rawMaterials][{{ loop.index0 }}][quantity]"
+                                                                       type="text"
+                                                                       class="form-control"
+                                                                >
+
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
